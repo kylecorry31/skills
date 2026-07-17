@@ -91,3 +91,6 @@ Claims are matched using their exact text from the JSON. Evidence whose `source`
 
 ## 6. Open the report
 Run a command to open the report in the user's default web browser.
+
+# Notes
+- Replace `/tmp/` with the temporary directory for the user's OS if necessary.
