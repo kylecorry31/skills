@@ -10,9 +10,9 @@ Your goal is to review the diff and identify any issues in it. After gathering s
 
 ### 1. Obtain the diff
 
-If the user said what to use as the fixed point, use that. Otherwise, assume the merge base of the current branch and its upstream (usually `main`) is the fixed point. Assume uncommitted changes are included in the review unless the user says otherwise. If there is no upstream and no uncommitted changes, ask them to specify a fixed point.
+If the user said what to use as the fixed point, use that. Otherwise, assume the merge base of the current branch and its base branch (usually `main`) is the fixed point. Assume uncommitted changes are included in the review unless the user says otherwise. If there is no base branch and no uncommitted changes, ask them to specify a fixed point.
 
-Capture the diff command once: `git diff <fixed-point>...HEAD` (three-dot, so the comparison is against the merge-base). Also note the list of commits via `git log <fixed-point>..HEAD --oneline`.
+Capture the diff command once and write it to a temporary file: `git diff <fixed-point>...HEAD` (three-dot, so the comparison is against the merge-base). Also note the list of commits via `git log <fixed-point>..HEAD --oneline`. The sub-agents should read from the temporary file for the review rather than running `git diff` themselves.
 
 ### 2. Review for correctness
 
