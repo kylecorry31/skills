@@ -15,6 +15,11 @@ I recommend running this at least once with a good model before you release a ch
 
 Inspired by https://github.com/mattpocock/skills
 
+### fact-check
+A skill to help fact check claims.
+
+The intended use is to take in text and optionally a list of trusted sources and search online to ensure claims made in the text are accurate (supported by trusted sources). It generates a report which highlights each claim and provides an assessment of whether it is accurate - this shouldn't be trusted, so it links to snippets in the sources.
+
 ### proofread
 A skill to help proofread text content. It will modify the file you point it at if there are issues, so use version control.
 
