@@ -20,6 +20,8 @@ A skill to help fact check claims.
 
 The intended use is to take in text and optionally a list of trusted sources and search online to ensure claims made in the text are accurate (supported by trusted sources). It generates a report which highlights each claim and provides an assessment of whether it is accurate - this shouldn't be trusted, so it links to snippets in the sources.
 
+Click on the highlight to make the tooltip stay open so you can click the links.
+
 ### proofread
 A skill to help proofread text content. It will modify the file you point it at if there are issues, so use version control.
 

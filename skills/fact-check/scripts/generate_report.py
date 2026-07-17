@@ -154,21 +154,60 @@ def generate_html(source: str, results: dict) -> str:
 body {{ background: #f7f7f5; color: #202124; font: 16px/1.6 system-ui, sans-serif; margin: 0; }}
 main {{ margin: 2rem auto; max-width: 55rem; padding: 0 1rem; }}
 .source {{ background: white; border: 1px solid #ddd; border-radius: .5rem; box-shadow: 0 2px 8px #0000000d; padding: 1.5rem; white-space: pre-wrap; word-break: break-word; }}
-.claim {{ border-radius: .2rem; box-decoration-break: clone; -webkit-box-decoration-break: clone; cursor: help; padding: .08em .12em; position: relative; }}
+.claim {{ border-radius: .2rem; box-decoration-break: clone; -webkit-box-decoration-break: clone; cursor: help; padding: .08em .12em; }}
 .accurate {{ background: #b7e4c7; }}
 .inaccurate {{ background: #f5b7b1; }}
 .partial {{ background: #ffe49a; }}
 .unverifiable {{ background: #d5d8dc; }}
-.tooltip {{ background: #202124; border-radius: .4rem; color: white; display: none; font-size: .9rem; font-weight: normal; left: 0; line-height: 1.4; max-height: 60vh; max-width: min(32rem, 80vw); overflow-y: auto; padding: .75rem 1rem; position: absolute; text-align: left; top: 100%; width: max-content; z-index: 2; }}
+.tooltip {{ background: #202124; border-radius: .4rem; box-sizing: border-box; color: white; display: none; font-size: .9rem; font-weight: normal; line-height: 1.4; max-height: 60vh; max-width: min(32rem, 80vw); overflow-y: auto; padding: .75rem 1rem; position: fixed; text-align: left; width: max-content; z-index: 2; }}
 .tooltip .reason {{ margin: .4rem 0 .75rem; }}
 .tooltip ul {{ margin: .4rem 0 0; padding-left: 1.2rem; }}
 .tooltip li + li {{ margin-top: .5rem; }}
 .tooltip a {{ color: #9dd8ff; }}
 .claim:hover .tooltip, .claim:focus-within .tooltip {{ display: block; }}
-@media (max-width: 40rem) {{ main {{ margin: 1rem auto; }} .source {{ padding: 1rem; }} .tooltip {{ bottom: 1rem; left: 1rem; max-width: none; position: fixed; right: 1rem; top: auto; width: auto; }} }}
+@media (max-width: 40rem) {{ main {{ margin: 1rem auto; }} .source {{ padding: 1rem; }} .tooltip {{ max-width: calc(100vw - 1rem); width: auto; }} }}
 </style>
 </head>
-<body><main><h1>Fact-check report</h1><div class="source">{rendered}</div></main></body>
+<body><main><h1>Fact-check report</h1><div class="source">{rendered}</div></main>
+<script>
+(() => {{
+  const gap = 8;
+  const edge = 8;
+  let activeClaim;
+
+  function positionTooltip(claim) {{
+    const tooltip = claim.querySelector('.tooltip');
+    if (!tooltip) return;
+
+    const claimRect = claim.getBoundingClientRect();
+    const tooltipRect = tooltip.getBoundingClientRect();
+    const belowTop = claimRect.bottom + gap;
+    const aboveTop = claimRect.top - tooltipRect.height - gap;
+    const top = belowTop + tooltipRect.height <= window.innerHeight - edge
+      ? belowTop
+      : Math.max(edge, aboveTop);
+    const left = Math.min(
+      Math.max(edge, claimRect.left),
+      window.innerWidth - tooltipRect.width - edge
+    );
+
+    tooltip.style.top = `${{top}}px`;
+    tooltip.style.left = `${{left}}px`;
+  }}
+
+  document.querySelectorAll('.claim').forEach((claim) => {{
+    const activate = () => {{
+      activeClaim = claim;
+      positionTooltip(claim);
+    }};
+    claim.addEventListener('mouseenter', activate);
+    claim.addEventListener('focusin', activate);
+  }});
+  window.addEventListener('resize', () => activeClaim && positionTooltip(activeClaim));
+  window.addEventListener('scroll', () => activeClaim && positionTooltip(activeClaim), true);
+}})();
+</script>
+</body>
 </html>
 '''
 
