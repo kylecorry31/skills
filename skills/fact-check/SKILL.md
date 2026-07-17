@@ -1,13 +1,13 @@
 ---
 name: fact-check
-description: Fact check content using trusted sources.
+description: Fact check content using authoritative sources.
 disable-model-invocation: true
 ---
 
 1. If the user did not provide text, ask for it.
 2. Identify each factual claim as an exact substring of the text.
-3. Check every claim against the user's trusted sources, or authoritative online sources when none are provided. Try to identify multiple different sources for each claim. Use parallel subagents for independent groups of claims when useful.
-4. Save the original text to `/tmp/fact-check-source-<source-slug>-<timestamp>.txt` and results to `/tmp/fact-check-result-<source-slug>-<timestamp>.json`. The results must validate against this JSON Schema:
+3. Check every claim against the user's authoritative sources, or authoritative online sources when none are provided. Try to identify multiple different sources for each claim. Use parallel subagents for independent groups of claims when useful.
+4. Save the original text to `/tmp/fact-check-source-<source-slug>-<timestamp>.txt` and the results to `/tmp/fact-check-result-<source-slug>-<timestamp>.json`. The results must validate against this JSON Schema:
 
 ```json
 {
