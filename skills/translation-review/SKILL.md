@@ -3,7 +3,7 @@ name: translation-review
 description: Perform a thorough translation review. Use when the user wants to check whether a translation is accurate.
 ---
 
-Your goal is to review whether a translation is accurate.
+Your goal is to review whether a translation is accurate. Do not make any changes to the source or translated text.
 
 ## Process
 
