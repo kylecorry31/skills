@@ -29,5 +29,10 @@ The intended use is for you to write all of the content yourself and use it as a
 
 Inspired by https://en.wikipedia.org/wiki/Wikipedia:Writing_articles_with_large_language_models
 
+### translation-review
+A skill to determine if a translation is accurate.
+
+The intended use is for you to provide it with both the source and translated text and determine if you should accept the translation as is or require changes. This is especially useful if you do not know the translated language and want to reduce the frequency of inaccurate translations in your project.
+
 ## Support
 I don't plan on providing support if it isn't working for you. I'll keep it up to date if I find it useful.
