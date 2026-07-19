@@ -36,6 +36,9 @@ A skill to help fact-check claims.
 - It may choose unreliable sources
 - Increases AI-originated traffic to websites
 
+### root-cause-analysis
+A skill to investigate bug reports, crashes, exceptions, and stack traces by confirming the issue, tracing an evidence-backed causal chain, and recommending immediate and systemic fixes without implementing them.
+
 ### proofread
 A skill to help proofread text content. It will modify the file you point it at if there are issues, so use version control.
 
