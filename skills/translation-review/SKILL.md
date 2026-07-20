@@ -1,6 +1,6 @@
 ---
 name: translation-review
-description: Perform a thorough translation review. Use when the user wants to check whether a translation is accurate.
+description: Use when evaluating whether a translation is accurate.
 ---
 
 Your goal is to review whether a translation is accurate. Do not make any changes to the source or translated text.
@@ -30,7 +30,7 @@ The following are not considered issues:
 
 ### 3. Aggregate results
 
-Take all of the findings and explain why each is an issue, and give it a priority. Sort the issues by priority. Do not nitpick. It is fine if there are no issues.
+Take all of the findings and explain why each is an issue, and give each one a priority. Sort the issues by priority. Do not nitpick. It is fine if there are no issues.
 
 The output should be a list of issues (if any) in the form:
 
