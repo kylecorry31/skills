@@ -47,9 +47,14 @@ Look for these types of issues:
 
 Take all of the findings and categorize them as either correctness or standards issues. If you find an issue, explain why it is an issue, and give it a priority. Sort the issues by priority. Do not nitpick. It is fine if there are no issues.
 
+The overall summary should be brief and highlight the overall correctness and quality of the code changes. It shouldn't attempt to summarize the changes themselves, but rather be high-level commentary on the quality of the changes. If there are no issues, just say "No issues found."
+
 The output should be a list of issues (if any) in the form:
 
 ```
+## Overall
+<High-level summary of the correctness and quality of the code changes>
+
 ## 1. [<High|Medium|Low>] [<Correctness|Standards>] <one-line description of the issue>
 
 <Detailed explanation of why it is an issue>
