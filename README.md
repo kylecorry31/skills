@@ -4,6 +4,22 @@ I prefer to use agents as a way to review my work, create scripts, automate task
 
 ## Catalog
 
+### bug-investigation
+A skill to investigate a reported bug, determine reliable reproduction steps, identify the root cause, and document the findings.
+
+**Intended use:** Provide a bug report and any relevant logs, screenshots, or other context. The skill analyzes the report, creates a regression test or other reproduction, traces the causal chain to the root cause, and writes an investigation report.
+
+**Justification for AI use:** It can quickly connect symptoms, stack traces, code paths, and test inputs across a codebase, reducing the time needed to reproduce and diagnose difficult bugs.
+
+**How a human remains in the loop:** The human provides the initial report and context, reviews the reproduction steps and root-cause analysis, and decides whether the proposed findings and regression tests are accurate. The human implements the fix.
+
+**Drawbacks:**
+- It may fail to reproduce bugs that depend on unavailable devices, environments, timing, or data
+- The root-cause analysis may be incomplete or based on an incorrect hypothesis
+- A regression test can encode the observed symptom without fully validating the intended behavior
+- It may reduce the understanding of the system gained by having to trace bugs 
+
+
 ### code-review
 A skill to help find bugs or deviations from standards.
 
