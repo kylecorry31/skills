@@ -14,7 +14,7 @@ Read the provided bug report and any associated logs, screenshots, or other info
 You should have an idea of what actions or inputs would cause the bug to occur.
 
 ## 2. Reproduce the bug
-Create a regression test or a script to reproduce the bug. If it can be isolated using a unit test, that will be the fastest way, but an automated end-to-end test is also acceptable. If the bug is difficult to reproduce, try to isolate the code or pull it into a script as a proof of concept with hard-coded inputs (or just hard-code inputs in the app's code) and test.
+Create a regression test or a script to reproduce the bug. If it can be isolated using a unit test, that will be the fastest way, otherwise write an automated end-to-end test. If the bug is difficult to reproduce, try to isolate the code or pull it into a script as a proof of concept with hard-coded inputs (or just hard-code inputs in the app's code) and test.
 
 The output of this step should be a set of steps that can reliably reproduce the bug and a regression test that will fail when the bug is present and pass when it is fixed.
 
@@ -47,6 +47,6 @@ Describe the root cause of the bug. Include a causal chain of events if applicab
 
 ```
 
-The reproduction steps should be user focused (e.g. how to reproduce the bug using the UI) whenever possible. If you were only able to reproduce the bug with a unit test, then include a note that the bug cannot be reproduced through the UI and just provide the unit test code.
+The reproduction steps should be user focused (e.g. how to reproduce the bug using the UI) whenever possible. If you were only able to reproduce the bug with a unit test, then include a note that the bug cannot be reproduced through the UI and just provide the unit test code. The regression test code should be embedded in the report as a code block.
 
 If the user asks you to write the report to a file but doesn't specify a name, use the format `bug-investigation-<timestamp>-<slugified-short-description>.md`.
