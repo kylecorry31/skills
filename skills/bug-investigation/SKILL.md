@@ -14,7 +14,7 @@ Read the provided bug report and any associated logs, screenshots, or other info
 You should have an idea of what actions or inputs would cause the bug to occur.
 
 ## 2. Reproduce the bug
-Create a regression test or a script to reproduce the bug. If it can be isolated using a unit test, that will be the fastest way, otherwise write an automated end-to-end test. If the bug is difficult to reproduce, try to isolate the code or pull it into a script as a proof of concept with hard-coded inputs (or just hard-code inputs in the app's code) and test.
+Create a regression test or a script to reproduce the bug. If there are existing tests in the same module as the bug, extend them. Otherwise, prefer an end-to-end test since that will capture the full context of the bug and should align with the repro steps. If the codebase is not set up with an end-to-end test suite or a unit test can clearly isolate the bug, then write a unit test. If the bug is difficult to reproduce, try to isolate the code or pull it into a script as a proof of concept with hard-coded inputs (or just hard-code inputs in the app's code) and test.
 
 The output of this step should be a set of steps that can reliably reproduce the bug and a regression test that will fail when the bug is present and pass when it is fixed.
 
