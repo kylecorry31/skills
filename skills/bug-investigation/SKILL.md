@@ -4,7 +4,7 @@ description: Investigate a bug to identify the root cause and reproduction steps
 disable-model-invocation: true
 ---
 
-Given a bug report (description, log, etc), create steps to reproduce the problem and identify the root cause. Do not actually fix the bug.
+Given a bug report (description, log, etc), create steps to reproduce the problem and identify the root cause. Do not actually fix the bug, but do create a regression test that the user can use to fix the bug using TDD.
 
 # Process
 
