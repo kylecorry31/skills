@@ -24,15 +24,10 @@ If you are unable to reproduce the bug, ask the user what the next steps should 
 Analyze the code and any relevant data to determine the underlying cause of the bug. If a bad input is the immediate cause, trace back to where that input is coming from and why it is invalid. Continue doing this until you reach the root cause of the bug.
 
 ## 4. Document your findings
-Produce a report at `bug-investigation-<timestamp>-<slugified-short-description>.md` in this format:
+Output a report with this format:
 
 ```markdown
 A brief description of the bug, its symptoms, and under what conditions it occurs.
-
-## Reproduction Steps
-1. Step 1
-2. Step 2
-3. ...
 
 ## Actual Behavior
 Describe what actually happens when the bug occurs.
@@ -43,6 +38,15 @@ Describe what should happen if the bug were not present.
 ## Root Cause
 Describe the root cause of the bug. Include a causal chain of events if applicable.
 
-## Tests
-List the regression tests you created. If the tests are self-contained and small, include them directly in the report. Otherwise, provide a link to where they can be found.
+## Reproduction Steps
+1. Step 1
+2. Step 2
+3. ...
+
+<regression test code if applicable, in code blocks>
+
 ```
+
+The reproduction steps should be user focused (e.g. how to reproduce the bug using the UI) whenever possible. If you were only able to reproduce the bug with a unit test, then include a note that the bug cannot be reproduced through the UI and just provide the unit test code.
+
+If the user asks you to write the report to a file but doesn't specify a name, use the format `bug-investigation-<timestamp>-<slugified-short-description>.md`.
