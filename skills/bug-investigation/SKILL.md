@@ -41,7 +41,7 @@ Describe what actually happens when the bug occurs.
 Describe what should happen if the bug were not present.
 
 ## Root Cause
-Describe the root cause of the bug. Include a causal chain of events.
+Describe the root cause of the bug. Include a causal chain of events if applicable.
 
 ## Tests
 List the regression tests you created. If the tests are self-contained and small, include them directly in the report. Otherwise, provide a link to where they can be found.
