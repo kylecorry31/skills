@@ -75,3 +75,5 @@ The output should be a list of issues (if any) in the form:
 
 ## 2. ...
 ```
+
+If the user asks you to write the report to a file but doesn't specify a name, use the format `code-review-<timestamp>-<slugified-short-description>.md`.
