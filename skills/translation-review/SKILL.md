@@ -37,9 +37,10 @@ The output should be a list of issues (if any) in the form:
 ```
 ## 1. [<High|Medium|Low>] <one-line description of the issue>
 
-Source: <source text snippet or identifier>
-
-Translated: <translated text snippet or identifier>
+Identifier: <identifier/key of the string if available>
+Source: <source text snippet>
+Translated: <translated text snippet>
+Untranslated: <source language translation of the translated text snippet>
 
 <Detailed explanation of why it is an issue>
 
