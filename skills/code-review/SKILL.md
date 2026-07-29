@@ -10,7 +10,7 @@ Your goal is to review code and identify issues with it. Do not make any changes
 
 ## 1. Obtain the code to review
 
-There are two types of code review:
+There are two types of code reviews:
 - **Diff review**: You are given a fixed point in the codebase and you review the changes made since that point.
 - **Current state review**: You are given a snapshot of the codebase and you review the current state of the code.
 
@@ -44,7 +44,9 @@ Look for these types of issues:
 - Unintended side effects
 - Incorrect logic/behavior
 - Unhandled edge cases
+- Concurrency issues (deadlocks, race conditions, etc.)
 - Doesn't match the specification or intended behavior
+- Tests (if included) are incorrect or won't fail if the code is broken
 
 ### Standards
 
@@ -52,14 +54,21 @@ Check the codebase for any docs, README files, or other files that describe codi
 
 Look for these types of issues:
 - Doesn't follow the codebase's conventions (styling, naming, architecture, testing, etc.)
+- Comments that are misleading, incorrect, missing, or unnecessary
 - Violation of the codebase's documented standards
 - Common code smells
-- Overly complex or confusing code
+- Code that is more complex than it needs to be
+- Confusing or unclear code
 - Lack of maintainability
 
 ## 3. Aggregate results
 
 Take all of the findings and categorize them as either correctness or standards issues. If you find an issue, explain why it is an issue, and give it a priority. Sort the issues by priority. Do not nitpick. It is fine if there are no issues.
+
+Priority levels:
+- **High**: The issue is a serious problem that must be addressed as soon as possible. It will likely cause significant impact if delivered as-is.
+- **Medium**: The issue is a problem that should be addressed. It may cause some impact if delivered as-is.
+- **Low**: The issue is a minor problem that should eventually be addressed. It is unlikely to cause much impact if delivered as-is.
 
 The overall summary should be brief and highlight the overall correctness and quality of the code changes. It shouldn't attempt to summarize the changes themselves, but rather be high-level commentary on the quality of the changes. If there are no issues, just say "No issues found."
 
