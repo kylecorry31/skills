@@ -45,6 +45,9 @@ Describe the root cause of the bug. Include a causal chain of events if applicab
 
 <regression test code if applicable, in code blocks>
 
+## Stack Trace
+The stack trace if applicable.
+
 ```
 
 The reproduction steps should be user focused (e.g. how to reproduce the bug using the UI) whenever possible. If you were only able to reproduce the bug with a unit test, then include a note that the bug cannot be reproduced through the UI and just provide the unit test code. The regression test code should be embedded in the report as a code block.
