@@ -70,6 +70,23 @@ A skill to help proofread text content. It will modify the file you point it at 
 
 Inspired by https://en.wikipedia.org/wiki/Wikipedia:Writing_articles_with_large_language_models
 
+### qa-review
+A skill to help test a change before rolling out to users.
+
+**Intended use:** You perform QA yourself and use this as another line of defense to catch unintended bugs or bad documentation. For Android apps, you connect this to an emulator and tell it what to test (ex. all changes since the last release) and ensure it has proper permissions/resources to be able to interact with the emulator (consider using Google's android skills).
+
+**Justification for AI use:** It adds another line of defense against bugs.
+
+**How a human remains in the loop:** This is a secondary review, so you still need to perform manual QA. You should monitor its progress and correct it if needed. It won't fix any bugs it finds.
+
+**Drawbacks:**
+- Creates a false sense of security if no bugs are detected
+- Overreliance can lessen knowledge about the codebase or let bugs slip through that would usually be caught by a thorough manual review
+- Some of the findings may be false positives
+- It may not be able to test in the same way a human would
+- Due to how many calls it will make, you may need to grant it extra permissions or closely attend to it as it runs
+- It will likely take a while to run and may use a lot of tokens
+
 ### translation-review
 A skill to determine if a translation is accurate.
 
