@@ -18,10 +18,10 @@ Continuously report your findings to `.scratch/<release-version-name>-qa/review.
 ## Test Results
 
 ### <Feature 1>
-- **PASS**: Describe what was tested (include commit/issue/PR number) and why you believe it behaved as expected.
+- **PASS**: Describe what was tested (include commit/issue/PR number) and why you believe it behaved as expected. No appendix needed.
 - **FAIL**: Describe what was tested (include commit/issue/PR number) and why you believe it did not behave as expected. Include repro steps, stack traces, screenshots, and other details that a developer would find useful to fix this in the Appendix section. Include the Appendix letter here.
-- **PARTIAL**: Describe what was tested (include commit/issue/PR number) and why you are unsure if it behaved as expected or not.
-- **NOT TESTED**: Describe what you couldn't test and why. Provide steps for how to test this manually if possible.
+- **PARTIAL**: Describe what was tested (include commit/issue/PR number) and why you are unsure if it behaved as expected or not. Include repro steps, stack traces, screenshots, and other details that a developer would find useful to fix this in the Appendix section. Include the Appendix letter here.
+- **NOT TESTED**: Describe what you couldn't test and why. Provide steps for how to test this manually if possible. No appendix needed.
 
 ### <Feature 2>
 ...
