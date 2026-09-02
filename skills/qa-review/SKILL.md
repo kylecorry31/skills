@@ -10,7 +10,7 @@ You can write automated tests to help with your QA review, but do not modify the
 
 If testing an Android app, perform your testing using a release/staging build on the connected emulator. Use ADB or Android tests for interacting with the device.
 
-Continuously report your findings to `.scratch/<release-version-name>-qa/review.md` using the following template:
+Continuously report your findings to `.scratch/<name-for-review>-qa/review.md` using the following template:
 
 ```markdown
 # <Release Version Name> QA Findings
@@ -35,10 +35,10 @@ You can put small changes here rather than creating feature sections. Use the sa
 ## Appendix
 
 ### Appendix A
-Put detailed stack traces, screenshots, etc. here. Screenshots and other large assets can be stored in `.scratch/<release-version-name>-qa/assets/`.
+Put detailed stack traces, screenshots (use markdown images), etc. here. Screenshots and other large assets can be stored in `.scratch/<name-for-review>-qa/assets/`.
 
 ### Appendix B
 ...
 ```
 
-Use `.scratch/<release-version-name>-qa/TODO.md` to create a to-do list for what you need to test. Keep this updated as you go along.
+Use `.scratch/<name-for-review>-qa/TODO.md` to create a to-do list for what you need to test. Keep this updated as you go along, ensuring you check off items as you complete them. This will help you keep track of what you have tested and what still needs to be tested.
