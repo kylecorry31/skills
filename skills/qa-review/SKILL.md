@@ -10,7 +10,7 @@ You can write automated tests to help with your QA review, but do not modify the
 
 If testing an Android app, perform your testing using a release/staging build on the connected emulator. Use ADB or Android tests for interacting with the device.
 
-Continuously report your findings to `.scratch/<name-for-review>-qa/review.md` using the following template:
+Create `.scratch/<name-for-review>-qa/TODO.md` and `.scratch/<name-for-review>-qa/review.md` before running the first test. Keep both files up to date throughout the review. Use the following template for `review.md`:
 
 ```markdown
 # <Release Version Name> QA Findings
@@ -41,4 +41,17 @@ Put detailed stack traces, screenshots (use markdown images), etc. here. Screens
 ...
 ```
 
-Use `.scratch/<name-for-review>-qa/TODO.md` to create a to-do list for what you need to test. Keep this updated as you go along, ensuring you check off items as you complete them. This will help you keep track of what you have tested and what still needs to be tested.
+# Process
+
+## 1. Set up tracking
+Create a TODO item for each test scenario, including edge cases and alternate user paths. Before starting the first test, mark the relevant item(s) as in progress (for example, change `[ ]` to `[~]`) and save `TODO.md`.
+
+## 2. Run the tests
+Run scenarios individually, or in small batches when they are independent or share setup, state, or tooling. Do not batch scenarios when one depends on another's result, changes shared state in a way that affects the others, or would make progress ambiguous.
+
+Capture screenshots, logs, and reproduction details while testing. As each scenario finishes, immediately add its `PASS`, `FAIL`, `PARTIAL`, or `NOT TESTED` result to `review.md`. In the same turn, mark its TODO item `[x]` if complete or `[!]` if blocked or failed, and save `TODO.md`.
+
+Before starting another scenario or batch, confirm that every completed scenario from the previous batch has a result in both files. If testing is interrupted, leave the files showing the completed scenarios and any in-progress items so another reviewer can resume. Do not reconstruct either file at the end of the review.
+
+## 3. Finish the review
+After all testing is complete, review both files for completeness and clarity. Confirm that every TODO item has a terminal status, every tested scenario has one clear result in `review.md`, every `FAIL` and `PARTIAL` result includes the required appendix details, screenshots and other assets are linked correctly, and no findings or blocked tests are missing. Resolve any discrepancies before finishing the review.
