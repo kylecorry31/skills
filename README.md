@@ -100,5 +100,8 @@ A skill to determine if a translation is accurate.
 - It may raise findings for valid translations which could lead the maintainer to reject something that should have been accepted
 - It may miss improper translations which could lead the maintainer to accept something that is wrong (likely better than the alternative of just accepting all community translations)
 
+## Installation
+This repository is an [Agent Plugin](https://agent-plugins.org/) containing reusable Agent Skills for human-in-the-loop software and content review. It is skills-only and does not provide an MCP server.
+
 ## Support
 I don't plan on providing support if it isn't working for you. I'll keep it up to date if I find it useful.

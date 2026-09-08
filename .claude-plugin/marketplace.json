@@ -1,0 +1,17 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "kylecorry31",
+  "description": "Kyle Corry's human-in-the-loop review skills",
+  "owner": {
+    "name": "Kyle Corry",
+    "url": "https://github.com/kylecorry31"
+  },
+  "plugins": [
+    {
+      "name": "kylecorry31-skills",
+      "source": "./",
+      "category": "development",
+      "homepage": "https://github.com/kylecorry31/skills"
+    }
+  ]
+}
