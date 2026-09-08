@@ -44,12 +44,12 @@ Put detailed stack traces, screenshots (use markdown images), etc. here. Screens
 # Process
 
 ## 1. Set up tracking
-Create a TODO item for each test scenario, including edge cases and alternate user paths. Before starting the first test, mark the relevant item(s) as in progress (for example, change `[ ]` to `[~]`) and save `TODO.md`.
+Create a TODO item for each test scenario, including edge cases and alternate user paths. Before starting each test scenario, mark its TODO item as in progress (for example, change `[ ]` to `[~]`) and save `TODO.md`. Repeat this immediately before every scenario, including each scenario in a batch; do not mark only the first scenario as in progress.
 
 ## 2. Run the tests
 Run scenarios individually, or in small batches when they are independent or share setup, state, or tooling. Do not batch scenarios when one depends on another's result, changes shared state in a way that affects the others, or would make progress ambiguous.
 
-Capture screenshots, logs, and reproduction details while testing. As each scenario finishes, immediately add its `PASS`, `FAIL`, `PARTIAL`, or `NOT TESTED` result to `review.md`. In the same turn, mark its TODO item `[x]` if complete or `[!]` if blocked or failed, and save `TODO.md`.
+Capture screenshots, logs, and reproduction details while testing. As each scenario finishes, immediately add its `PASS`, `FAIL`, `PARTIAL`, or `NOT TESTED` result to `review.md`. In the same turn, mark its TODO item `[x]` if complete or `[!]` if blocked or failed, and save `TODO.md`. Before starting the next scenario, first mark that scenario's TODO item `[~]` and save `TODO.md`.
 
 Before starting another scenario or batch, confirm that every completed scenario from the previous batch has a result in both files. If testing is interrupted, leave the files showing the completed scenarios and any in-progress items so another reviewer can resume. Do not reconstruct either file at the end of the review.
 
