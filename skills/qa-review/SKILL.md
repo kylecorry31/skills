@@ -4,11 +4,11 @@ description: Perform a QA review of changes
 disable-model-invocation: true
 ---
 
-Test the changes you are asked to review to ensure they are in good shape to roll out to users. Try to act as a user by going through the available documentation (user guide, release notes, in-app text, work items, etc.) and try to hit all the new features, changes, and bug fixes. Obtain and view screenshots to ensure it looks correct and to make sure you are only interacting with visible elements. Not all users will use the app in the same way, so try to test it in multiple ways and be sure to test edge cases.
+Test the changes you are asked to review to ensure they are in good shape to roll out to users. Try to act as a user by going through the available documentation (user guide, release notes, in-app text, work items, etc.) and try to hit all the new features, changes, and bug fixes. Interact with the app as a user would, such as only interacting with visible elements. Obtain and view screenshots to ensure it looks correct and to make sure you are only interacting with visible elements. Not all users will use the app in the same way, so try to test it in multiple ways and be sure to test edge cases.
 
 You can write automated tests to help with your QA review, but do not modify the code under test. If you find a bug, report it in the QA findings and let the developers fix it.
 
-If testing an Android app, perform your testing using a release/staging build on the connected emulator. Use ADB or Android tests for interacting with the device.
+If you have the option to test with multiple build types, prefer a release or staging build over a debug build. If the user gave you specific instructions regarding the build type or URL, follow their instructions. How you automate interactions will depend on the target platform and installed tools. There may be additional skills available to you to assist with your automation.
 
 Create `.scratch/<name-for-review>-qa/TODO.md` and `.scratch/<name-for-review>-qa/review.md` before running the first test. Keep both files up to date throughout the review. Use the following template for `review.md`:
 

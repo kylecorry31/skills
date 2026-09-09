@@ -18,6 +18,8 @@ If the user didn't specify which type of review they want:
 - If they are on a branch that isn't `main`/`master`, have provided a fixed point, or have uncommitted changes, assume they want a diff review.
 - If they are on `main`/`master` with no uncommitted changes, assume they want a current state review.
 
+If provided with a link to a pull request, you can either check it out if it is in the same repo you are currently in and there are no uncommitted changes, or you can clone it to a temporary directory.
+
 ### Diff review
 If the user said what to use as the fixed point, use that. Otherwise, assume the merge base of the current branch and its base branch (usually `main` or `master`) is the fixed point. Assume uncommitted changes are included in the review unless the user says otherwise. If there is no base branch and no uncommitted changes, ask them to specify a fixed point.
 
@@ -32,9 +34,11 @@ Identify the paths/files of code you are tasked with reviewing. If the user didn
 
 Delegate the review to parallel sub-agents where needed.
 
+You don't need to build, test, or lint the code since those can be assumed to all pass.
+
 ### Correctness
 
-Use context clues to determine what correct means. That may be obtained by looking at commit history, comments, naming, documentation, or a user-provided description. If you can't figure out what the intent is, ask the user to clarify. If the user provided a GitHub issue, look that up with `gh issue view <issue-number>` and extract the title and body.
+Use context clues to determine what correct means. That may be obtained by looking at commit history, comments, naming, documentation, or a user-provided description. If you can't figure out what the intent is, ask the user to clarify. If the user provided a work item/issue, look that up and extract the title, body, comments, etc.
 
 Look for these types of issues:
 - Runtime errors and unhandled exceptions
