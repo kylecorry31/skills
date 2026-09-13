@@ -32,9 +32,9 @@ Identify the paths/files of code you are tasked with reviewing. If the user didn
 
 ## 2. Review
 
-Delegate the review to parallel sub-agents where needed.
+Launch at least 2 independent review subagents in parallel to conduct the code review. Pass each agent the diff/path to the diff file and one of the angles below. If there are multiple disconnected areas to review, you may spin up more than one 'correctness' review agent with a narrow focus on each area. Each returns its findings with `file`, `line`, a one-line `summary`, and a more detailed `description` about why it is an issue. Don't build, test, or lint the code since those can be assumed to all pass.
 
-You don't need to build, test, or lint the code since those can be assumed to all pass.
+Once you launch the review agents, your only task it to wait for their completion so you can aggregate the results.
 
 ### Correctness
 
@@ -63,24 +63,26 @@ Look for these types of issues:
 - Common code smells
 - Code that is more complex than it needs to be
 - Confusing or unclear code
-- Lack of maintainability
+- Lacks maintainability
 
 ## 3. Aggregate results
 
-Take all of the findings and categorize them as either correctness or standards issues. If you find an issue, explain why it is an issue, and give it a priority. Sort the issues by priority. Do not nitpick. It is fine if there are no issues.
+Wait for all review agents to complete, deduplicate the findings, and assign them each a priority level.
 
 Priority levels:
 - **High**: The issue is a serious problem that must be addressed as soon as possible. It will likely cause significant impact if delivered as-is.
 - **Medium**: The issue is a problem that should be addressed. It may cause some impact if delivered as-is.
 - **Low**: The issue is a minor problem that should eventually be addressed. It is unlikely to cause much impact if delivered as-is.
 
-The overall summary should be brief and highlight the overall correctness and quality of the code changes. It shouldn't attempt to summarize the changes themselves, but rather be high-level commentary on the quality of the changes. If there are no issues, just say "No issues found."
+If there are no issues, just say "No issues found."
 
-The output should be a list of issues (if any) in the form:
+If an issue is a nitpick, informational, or otherwise will not cause any noticeable impact, it must be left out of the report.
+
+
+The output should be a list of issues (if any) sorted by priority descending in the form:
 
 ```
-## Overall
-<High-level summary of the correctness and quality of the code changes>
+# Code Review Results
 
 ## 1. [<High|Medium|Low>] [<Correctness|Standards>] <one-line description of the issue>
 
