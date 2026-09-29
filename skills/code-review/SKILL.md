@@ -23,7 +23,9 @@ If provided with a link to a pull request, you can either check it out if it is 
 ### Diff review
 If the user said what to use as the fixed point, use that. Otherwise, assume the merge base of the current branch and its base branch (usually `main` or `master`) is the fixed point. Assume uncommitted changes are included in the review unless the user says otherwise. If there is no base branch and no uncommitted changes, ask them to specify a fixed point.
 
-Capture the diff command once and write it to a temporary file: `git diff <fixed-point>...HEAD`. Note the list of commits via `git log <fixed-point>..HEAD --oneline`. Read from the temporary file for the review rather than running `git diff` constantly.
+Capture the diff once and write it to a temporary file: `git diff -U1 -w -M <fixed-point>` (minimal context, whitespace ignored, renames detected; agents can open the file for more context). This compares the working tree to the fixed point, so it includes uncommitted changes (use `git diff <fixed-point>...HEAD` instead if the user asked to exclude them). If the fixed point is the merge base, resolve it first with `git merge-base <base> HEAD`. `git diff` skips untracked files, so list them with `git ls-files --others --exclude-standard` and append each with `git diff --no-index /dev/null <file>`.
+
+Exclude files that don't need review (lock files, generated code, vendored dependencies, minified files, snapshots, binaries, deleted files, pure renames/moves, large data files). For large new files (data, fixtures), don't include their contents; list their name and size instead. Note the list of commits via `git log <fixed-point>..HEAD --oneline` and the size of the diff via `git diff --stat <fixed-point>`. Read from the temporary file for the review rather than running `git diff` constantly.
 
 You are looking to identify issues with what changed, not what was already in the codebase, unless what changed impacts existing code.
 
@@ -32,9 +34,24 @@ Identify the paths/files of code you are tasked with reviewing. If the user didn
 
 ## 2. Review
 
-Launch at least 2 independent review subagents in parallel to conduct the code review. Pass each agent the diff/path to the diff file and one of the angles below. If there are multiple disconnected areas to review, you may spin up more than one 'correctness' review agent with a narrow focus on each area. Each returns its findings with `file`, `line`, a one-line `summary`, and a more detailed `description` about why it is an issue. Don't build, test, or lint the code since those can be assumed to all pass.
+Scale the review to the size of the change:
+- **Small** (roughly under 300 changed lines in a few files): review it yourself in a single pass covering both angles below. Don't launch subagents.
+- **Medium**: launch 2 independent review subagents in parallel, one per angle below. Pass each the path to the diff file.
+- **Large** (roughly over 1500 changed lines, or multiple disconnected areas): split the 'correctness' angle into one agent per area (group by directory/feature), each given its own diff file. Write one per area with the same command and exclusions as above, limited to that area's paths (`git diff -U1 -w -M <fixed-point> -- <paths>`), so no agent pays to read another area's changes. Use at most 4 correctness agents: merge small areas, and split an area over roughly 1000 changed lines by file rather than by feature. The 'standards' agent does not get the full diff; give it the `git diff --stat` output, the file list, and the diff file path, and tell it to read only the hunks of files that look off-convention.
+- **Huge** (roughly over 5000 changed lines after exclusions): don't review everything. Tell the user the size and offer to review a subset instead (a directory, or the highest-risk files such as auth, security, concurrency, migrations, and high-churn files). Proceed only once they choose.
 
-Once you launch the review agents, your only task it to wait for their completion so you can aggregate the results.
+Give the subagents these instructions:
+- Read the diff first, then only the code needed to verify a suspicion (the full changed file, its callers, or the definitions it uses). Don't survey the rest of the codebase.
+- Only report issues you are confident are real and would have a noticeable impact. Drop nitpicks and speculation instead of reporting them.
+- Return findings with `file`, `line`, a one-line `summary`, and a `description` (2-3 sentences) about why it is an issue. Don't restate the diff or describe code that is fine.
+- Budget: read at most ~15 files beyond the diff. Use grep to find callers and definitions instead of reading whole files.
+- Report at most the 10 highest-confidence findings.
+- Write findings to a file (path given by you) and return only that path and a count of findings, in the structured form above.
+- Don't build, test, or lint the code since those can be assumed to all pass.
+- The 'standards' agent doesn't need deep reasoning, so run it on a smaller/faster model.
+- Run the 'correctness' agents on a smaller/faster model only if you judge the change simple (mechanical edits, renames, config, docs, boilerplate, or straightforward logic with no concurrency, security, or data-migration concerns). Otherwise use the default model.
+
+Once you launch the review agents, your only task is to wait for their completion so you can aggregate the results.
 
 ### Correctness
 
@@ -54,20 +71,17 @@ Look for these types of issues:
 
 ### Standards
 
-Check the codebase for any docs, README files, or other files that describe coding standards. Check other code in the codebase for common or related patterns.
+Check the root-level docs (README, CONTRIBUTING, CLAUDE.md/AGENTS.md, lint/style configs) for coding standards. Compare against a few sibling files next to the changed code (not the whole codebase) for common or related patterns.
 
 Look for these types of issues:
 - Doesn't follow the codebase's conventions (styling, naming, architecture, testing, etc.)
 - Comments that are misleading, incorrect, missing, or unnecessary
 - Violation of the codebase's documented standards
-- Common code smells
-- Code that is more complex than it needs to be
-- Confusing or unclear code
-- Lacks maintainability
+- Code that is more complex, confusing, or duplicated than it needs to be, or that reimplements something that already exists in the codebase
 
 ## 3. Aggregate results
 
-Wait for all review agents to complete, deduplicate the findings, and assign them each a priority level.
+Wait for all review agents to complete, deduplicate the findings, and assign them each a priority level. Read the findings files the agents wrote. Trust the agents' findings; only re-read code to resolve a conflict between agents or when a finding is unclear.
 
 Priority levels:
 - **High**: The issue is a serious problem that must be addressed as soon as possible. It will likely cause significant impact if delivered as-is.
