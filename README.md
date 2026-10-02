@@ -1,122 +1,17 @@
 # Skills
 
-I prefer to use agents as a way to review my work, create scripts, automate tasks, implement small low-risk changes (e.g., something very easy to review and trivial to implement), and write automated tests. I enjoy design and development, so I don't plan to add skills in that area. All skills should be human-in-the-loop and have justification for why it makes sense to use AI for it.
-
 ## Catalog
 
-### bug-investigation
-A skill to investigate a reported bug, determine reliable reproduction steps, identify the root cause, and document the findings.
-
-**Intended use:** Provide a bug report and any relevant logs, screenshots, or other context. The skill analyzes the report, creates a regression test or other reproduction, traces the causal chain to the root cause, and writes an investigation report.
-
-**Justification for AI use:** It can quickly connect symptoms, stack traces, code paths, and test inputs across a codebase, reducing the time needed to reproduce and diagnose difficult bugs.
-
-**How a human remains in the loop:** The human provides the initial report and context, reviews the reproduction steps and root-cause analysis, and decides whether the proposed findings and regression tests are accurate. The human implements the fix.
-
-**Drawbacks:**
-- It may fail to reproduce bugs that depend on unavailable devices, environments, timing, or data
-- The root-cause analysis may be incomplete or based on an incorrect hypothesis
-- A regression test can encode the observed symptom without fully validating the intended behavior
-- It may reduce the understanding of the system gained by having to trace bugs 
-
-
-### code-review
-A skill to help find bugs or deviations from standards.
-
-**Intended use:** Be as thorough as possible in your manual review and testing process so you catch most of the issues, and then use this skill to have the agent catch things that were missed. It can be run on uncommitted changes, a branch, or against the last release (e.g., since tag 1.0.0). I recommend running this at least once with a good model before you release a changeset. I've had success in it identifying edge cases after a month of development and testing.
-
-**Justification for AI use:** It adds another line of defense against bugs.
-
-**How a human remains in the loop:** It does not replace manual review and does not fix any of the findings itself.
-
-**Drawbacks:**
-- Creates a false sense of security if no bugs are detected
-- Overreliance can lessen knowledge about the codebase or let bugs slip through that would usually be caught by a thorough manual review
-- Some of the findings may be false positives
-
-Inspired by https://github.com/mattpocock/skills
-
-### fact-check
-A skill to help fact-check claims.
-
-**Intended use:** It takes in text and optionally a list of authoritative sources and searches online to ensure claims made in the text are accurate (supported by authoritative sources). It generates a report that highlights each claim and provides an assessment of whether it is accurate - this shouldn't be trusted, so it links to snippets in the sources. Click on the highlight to make the tooltip stay open so you can click the links.
-
-**Justification for AI use:** It automates the matching of authoritative sources to claims to help you avoid misinformation. This can be a very time consuming process for large bodies of text.
-
-**How a human remains in the loop:** You should click each claim to view the tooltip, read the reason/quotes, and click the links to verify yourself (on most sites it will open the site with the quoted text highlighted).
-
-**Drawbacks:**
-- Does not reliably work for printed sources (e.g. books)
-- Overreliance can lead to trusting the findings - be sure to at least read the source quotes and preferably click on the links for every claim you are fact checking
-- It may hallucinate something as true/false when it is the opposite (regardless of what sources it finds)
-- It may choose unreliable sources
-- Increases AI-originated traffic to websites
-
-### proof-of-concept
-A skill to create a throwaway experiment to evaluate whether an idea or feature is feasible.
-
-**Intended use:** Provide an idea or feature to explore. The skill builds a focused proof of concept that you can evaluate and iterate on before investing time in a polished implementation. If requested, it can clean up the code for readability and write a summary to help you use the experiment as a reference.
-
-**Justification for AI use:** It can quickly build experiments to answer feasibility questions, reducing the time spent on ideas that may not work.
-
-**How a human remains in the loop:** The human defines the idea, evaluates the working experiment, provides feedback, and decides whether to pursue a production implementation. The AI does not create the production implementation.
-
-**Drawbacks:**
-- The code is intentionally rough and may skip tests, documentation, error handling, and best practices
-- Hardcoded values and shortcuts may hide limitations that matter in production
-- A successful experiment does not guarantee that the idea will work under real-world conditions
-- Copying the code into production without further development and review may introduce bugs
-
-### proofread
-A skill to help proofread text content. It will modify the file you point it at if there are issues, so use version control.
-
-**Intended use:** You write all of the content yourself and use it as a spelling/grammar fix. It should be VERY limited in what it touches and you should use a git diff viewer to make sure.
-
-**Justification for AI use:** It adds another line of defense against spelling and grammar mistakes. Spelling and grammar checkers already exist, but this helps if you do your writing in a simpler text editor.
-
-**How a human remains in the loop:** It should only make very minor spelling and grammar fixes which you can easily confirm via a git diff viewer. It will also make some recommendations for segments that are not very readable that you can act on. It should not rewrite any of your content or change your tone/style. It does not replace manual proofreading.
-
-**Drawbacks:**
-- It may decide to rewrite some of your content
-- A git diff viewer is required to properly check the results since it edits the files
-- The readability recommendations may be inaccurate or noise
-- Overreliance could lead to lack of improvement in spelling and grammar skills
-- While not the intent of the author, lack of perfect grammar can add a human touch which this skill may remove
-
-Inspired by https://en.wikipedia.org/wiki/Wikipedia:Writing_articles_with_large_language_models
-
-### qa-review
-A skill to help test a change before rolling out to users.
-
-**Intended use:** You perform QA yourself and use this as another line of defense to catch unintended bugs or bad documentation. For Android apps, you connect this to an emulator and tell it what to test (ex. all changes since the last release) and ensure it has proper permissions/resources to be able to interact with the emulator (consider using Google's android skills).
-
-**Justification for AI use:** It adds another line of defense against bugs.
-
-**How a human remains in the loop:** This is a secondary review, so you still need to perform manual QA. You should monitor its progress and correct it if needed. It won't fix any bugs it finds.
-
-**Drawbacks:**
-- Creates a false sense of security if no bugs are detected
-- Overreliance can lessen knowledge about the codebase or let bugs slip through that would usually be caught by a thorough manual review
-- Some of the findings may be false positives
-- It may not be able to test in the same way a human would
-- Due to how many calls it will make, you may need to grant it extra permissions or closely attend to it as it runs
-- It will likely take a while to run and may use a lot of tokens
-
-### translation-review
-A skill to determine if a translation is accurate.
-
-**Intended use:** Provide it with both the source and translated text and it determines if you should accept the translation as is or require changes. This is especially useful if you do not know the translated language and want to reduce the frequency of inaccurate translations in your project.
-
-**Justification for AI use:** It adds a line of defense for mistranslated text, especially if the reviewer doesn't know the language and does not have time to machine translate each entry.
-
-**How a human remains in the loop:** It presents a list of findings to you with reasons for why it is mistranslated. You decide which translations to reject and can use machine translation to confirm. 
-
-**Drawbacks:**
-- It may raise findings for valid translations which could lead the maintainer to reject something that should have been accepted
-- It may miss improper translations which could lead the maintainer to accept something that is wrong (likely better than the alternative of just accepting all community translations)
+- **bug-investigation**: Investigates a reported bug. Provide the report and any logs or screenshots, and it reproduces the bug, finds the root cause, and writes an investigation report.
+- **code-review**: Finds bugs or deviations from standards in a diff or codebase snapshot. Use it as a second pass after your own manual review.
+- **fact-check**: Checks claims in text against authoritative sources and generates a report linking each claim to source snippets. Click each claim's highlight to verify the quotes and links yourself.
+- **proof-of-concept**: Builds a throwaway experiment to test whether an idea or feature is feasible before you invest in a polished implementation.
+- **proofread**: Fixes spelling and grammar in a text file with minimal changes. It edits the file, so use version control and review the diff. Inspired by https://en.wikipedia.org/wiki/Wikipedia:Writing_articles_with_large_language_models
+- **qa-review**: Tests a change before release, such as against an emulator for Android apps. Use it as a second line of defense after your own QA.
+- **translation-review**: Compares source and translated text and reports whether the translation should be accepted or changed. Useful when you don't know the target language.
 
 ## Installation
-This repository is an [Agent Plugin](https://agent-plugins.org/) containing reusable Agent Skills for human-in-the-loop software and content review. It is skills-only and does not provide an MCP server.
+This repository is an [Agent Plugin](https://agent-plugins.org/) containing reusable Agent Skills for software and content review. It is skills-only and does not provide an MCP server.
 
 ## Support
 I don't plan on providing support if it isn't working for you. I'll keep it up to date if I find it useful.
