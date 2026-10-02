@@ -52,6 +52,21 @@ A skill to help fact-check claims.
 - It may choose unreliable sources
 - Increases AI-originated traffic to websites
 
+### proof-of-concept
+A skill to create a throwaway experiment to evaluate whether an idea or feature is feasible.
+
+**Intended use:** Provide an idea or feature to explore. The skill builds a focused proof of concept that you can evaluate and iterate on before investing time in a polished implementation. If requested, it can clean up the code for readability and write a summary to help you use the experiment as a reference.
+
+**Justification for AI use:** It can quickly build experiments to answer feasibility questions, reducing the time spent on ideas that may not work.
+
+**How a human remains in the loop:** The human defines the idea, evaluates the working experiment, provides feedback, and decides whether to pursue a production implementation. The AI does not create the production implementation.
+
+**Drawbacks:**
+- The code is intentionally rough and may skip tests, documentation, error handling, and best practices
+- Hardcoded values and shortcuts may hide limitations that matter in production
+- A successful experiment does not guarantee that the idea will work under real-world conditions
+- Copying the code into production without further development and review may introduce bugs
+
 ### proofread
 A skill to help proofread text content. It will modify the file you point it at if there are issues, so use version control.
 
