@@ -8,7 +8,7 @@
 - **proof-of-concept**: Builds a throwaway experiment to test whether an idea or feature is feasible before you invest in a polished implementation.
 - **proofread**: Fixes spelling and grammar in a text file with minimal changes. It edits the file, so use version control and review the diff. Inspired by https://en.wikipedia.org/wiki/Wikipedia:Writing_articles_with_large_language_models
 - **qa-review**: Tests a change before release, such as against an emulator for Android apps. Use it as a second line of defense after your own QA.
-- **testing**: Guides writing unit and end-to-end tests the way I prefer: public-behavior tests, hardcoded independent expectations, red/green TDD for bugs, and stable UI automation. Framework and platform agnostic.
+- **automated-testing**: Guides writing unit and end-to-end tests the way I prefer: public-behavior tests, hardcoded independent expectations, red/green TDD for bugs, and stable UI automation. Framework and platform agnostic.
 - **translation-review**: Compares source and translated text and reports whether the translation should be accepted or changed. Useful when you don't know the target language.
 
 ## Installation

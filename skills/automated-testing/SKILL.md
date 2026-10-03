@@ -1,5 +1,5 @@
 ---
-name: testing
+name: automated-testing
 description: Use when writing, updating, reviewing, or fixing unit tests or end-to-end tests, or when fixing a bug that needs a regression test.
 ---
 
