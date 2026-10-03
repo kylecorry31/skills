@@ -19,4 +19,12 @@ Before a refactor, add tests that lock in the current behavior, then make the ch
 
 ## End-to-end tests
 
-Write one test per behavior. If setting up the app state is expensive, combine the happy path of every action the feature offers into one main test (for example `verifyBasicFunctionality`) made of small named steps that do not depend on each other's side effects, so a failure points at one step. Interact only through the visible UI, and do not mock the stack being verified. Run on an emulator or other disposable environment rather than the user's own device.
+Keep end-to-end tests few and focused on what users depend on. Cover each important user journey once, and push edge cases and calculations down to unit tests.
+
+Each test covers one behavior, is independent of the others, and passes in any order or on its own. Every test starts from a known state, so a failure points at one cause. Do not chain tests or let one rely on another's leftovers.
+
+Seed the starting state (data, settings, fixed location and time) through the app's real storage or API instead of clicking through setup. This keeps tests fast and lets them assert exact values, so it is the way to handle expensive setup, not combining behaviors into one long test. Seeding only sets the starting point: the behavior under test still runs through the visible UI, and expected values still come from an independent source.
+
+Keep a few journey tests that start from a clean state and act as the user end to end, such as creating, editing, and deleting an item. A journey is one scenario whose steps genuinely build on each other, not a grab bag of unrelated checks.
+
+Find elements by stable, user-facing identifiers (like text/type or an ID as fallback) rather than position or layout. Wait for the condition you need instead of sleeping. Do not mock the stack being verified. Run on an emulator or other disposable environment rather than the user's own device.
