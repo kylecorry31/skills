@@ -2,13 +2,16 @@
 name: qa-review
 description: Perform a QA review of changes
 disable-model-invocation: true
+argument-hint: "<changes to test: branch, tag range, PR, or feature> [build, device, time limit]"
 ---
 
-Test the changes you are asked to review to ensure they are in good shape to roll out to users. Try to act as a user by going through the available documentation (user guide, release notes, in-app text, work items, etc.) and try to hit all the new features, changes, and bug fixes. Interact with the app as a user would, such as only interacting with visible elements. Obtain and view screenshots to ensure it looks correct and to make sure you are only interacting with visible elements. Not all users will use the app in the same way, so try to test it in multiple ways and be sure to test edge cases.
+Test the changes you are asked to review to ensure they are in good shape to roll out to users. Act as a user: go through the available documentation (user guide, release notes, in-app text, work items, etc.) and hit all the new features, changes, and bug fixes, including edge cases and alternate ways of using them. Interact only with visible elements, and view screenshots to confirm what is on screen.
 
-You can write automated tests to help with your QA review, but do not modify the code under test. If you find a bug, report it in the QA findings and let the developers fix it.
+Test only the changes the user named. Before testing, confirm the installed build contains those changes (version, commit, or branch) and is not a different branch. If the user gives a time limit or asks for a smoke test, cover only the major changes, but keep the same tracking files below.
 
-If you have the option to test with multiple build types, prefer a release or staging build over a debug build. If the user gave you specific instructions regarding the build type or URL, follow their instructions. How you automate interactions will depend on the target platform and installed tools. There may be additional skills available to you to assist with your automation.
+If you have the option to test with multiple build types, prefer a release or staging build over a debug build. Follow any build, URL, or device instructions from the user. Use an emulator unless told otherwise. On a physical device, do not install builds or change settings unless the user said you may, and say when you are done with it so they can unplug it. How you automate interactions depends on the target platform and installed tools. Other skills may be available to help.
+
+You can write automated tests to help, but do not modify the code under test, except temporary log statements when the user allows them (remove them afterward). If you find a bug, report it in the QA findings and let the developers fix it.
 
 Create `.scratch/<name-for-review>-qa/TODO.md` and `.scratch/<name-for-review>-qa/review.md` before running the first test. Keep both files up to date throughout the review. Use the following template for `review.md`:
 
@@ -44,14 +47,12 @@ Put detailed stack traces, screenshots (use markdown images), etc. here. Screens
 # Process
 
 ## 1. Set up tracking
-Create a TODO item for each test scenario, including edge cases and alternate user paths. Before starting each test scenario, mark its TODO item as in progress (for example, change `[ ]` to `[~]`) and save `TODO.md`. Repeat this immediately before every scenario, including each scenario in a batch; do not mark only the first scenario as in progress.
+Create a TODO item for each test scenario, including edge cases and alternate user paths. Mark a scenario's item in progress (change `[ ]` to `[~]`) and save `TODO.md` immediately before starting it, including each scenario in a batch.
 
 ## 2. Run the tests
 Run scenarios individually, or in small batches when they are independent or share setup, state, or tooling. Do not batch scenarios when one depends on another's result, changes shared state in a way that affects the others, or would make progress ambiguous.
 
-Capture screenshots, logs, and reproduction details while testing. As each scenario finishes, immediately add its `PASS`, `FAIL`, `PARTIAL`, or `NOT TESTED` result to `review.md`. In the same turn, mark its TODO item `[x]` if complete or `[!]` if blocked or failed, and save `TODO.md`. Before starting the next scenario, first mark that scenario's TODO item `[~]` and save `TODO.md`.
-
-Before starting another scenario or batch, confirm that every completed scenario from the previous batch has a result in both files. If testing is interrupted, leave the files showing the completed scenarios and any in-progress items so another reviewer can resume. Do not reconstruct either file at the end of the review.
+Capture screenshots, logs, and reproduction details while testing. As each scenario finishes, in the same turn, add its `PASS`, `FAIL`, `PARTIAL`, or `NOT TESTED` result to `review.md` and mark its TODO item `[x]` if complete or `[!]` if blocked or failed. Before starting the next scenario or batch, confirm every completed scenario has a result in both files. If testing is interrupted, leave both files showing the completed and in-progress scenarios so another reviewer can resume. Do not reconstruct either file at the end.
 
 ## 3. Finish the review
-After all testing is complete, review both files for completeness and clarity. Confirm that every TODO item has a terminal status, every tested scenario has one clear result in `review.md`, every `FAIL` and `PARTIAL` result includes the required appendix details, screenshots and other assets are linked correctly, and no findings or blocked tests are missing. Resolve any discrepancies before finishing the review.
+When testing is complete, check both files: every TODO item has a terminal status, every tested scenario has one clear result in `review.md`, every `FAIL` and `PARTIAL` includes the appendix details, assets are linked correctly, and no findings or blocked tests are missing. Resolve any discrepancies.

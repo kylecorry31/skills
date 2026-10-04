@@ -1,6 +1,7 @@
 ---
 name: translation-review
 description: Use when evaluating whether a translation is accurate.
+argument-hint: "<source and translated text, files, or directories>"
 ---
 
 Your goal is to review whether a translation is accurate. Do not make any changes to the source or translated text.
@@ -28,14 +29,21 @@ The following are not considered issues:
 - Articles/pronouns added because the target language requires them
 - Word order changes due to target language syntax rules
 
+For many files or languages, review them in parallel with subagents.
+
 ### 3. Aggregate results
 
-Take all of the findings and explain why each is an issue, and give each one a priority. Sort the issues by priority. Do not nitpick. It is fine if there are no issues.
+Take all of the findings and explain why each is an issue. Do not nitpick. It is fine if there are no issues. Order the findings by severity:
+
+- **Blocking**: the translation tells users something wrong or unsafe, such as a changed meaning, a reversed negation, a changed number or unit, an altered condition or warning, or a broken placeholder. It must be fixed or replaced.
+- **Consider**: a real but minor inaccuracy, such as an added or omitted detail, a tone shift, or a lost format tag, that the author may accept.
+
+Quote the source and translated text exactly as they appear in the input. Drop any finding you cannot support with those quotes.
 
 The output should be a list of issues (if any) in the form:
 
 ```
-## 1. [<High|Medium|Low>] <one-line description of the issue>
+## 1. [<Blocking|Consider>] <one-line description of the issue>
 
 Identifier: <identifier/key of the string if available>
 Source: <source text snippet>

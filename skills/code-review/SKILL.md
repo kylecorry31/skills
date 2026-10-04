@@ -2,6 +2,7 @@
 name: code-review
 description: Review code and report only real bugs and serious problems.
 disable-model-invocation: true
+argument-hint: "[PR number | since <tag> | uncommitted | <area to review>] or findings to verify"
 ---
 
 Review without changing code. Report only material problems with a concrete failing scenario or demonstrable cost. For diffs, report only problems introduced or worsened by the change.
@@ -11,7 +12,8 @@ Exclude polish, reasonable style or design choices, speculative future issues, a
 # Scope
 
 - **Diff review**: use the user's fixed point or PR, or review the current branch/worktree when off `main`/`master` or when uncommitted changes exist.
-- **Snapshot review**: use on clean `main`/`master`; ask for files if unspecified.
+- **Snapshot review**: review the code the user names (files, a package, or a feature) as it is now, not a diff. On clean `main`/`master` with nothing named, ask what to review.
+- **Verify findings**: when given existing findings (pasted or in a file), do not run a new review. Check each against the current code, then keep, relabel, or drop it, and rewrite the kept ones in the report format below.
 
 For a PR, check it out if it belongs to the current repo and the tree is clean; otherwise clone to a temporary directory.
 
