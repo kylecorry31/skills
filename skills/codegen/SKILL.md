@@ -2,6 +2,7 @@
 name: codegen
 description: Generate or regenerate code in any language from a high-level spec of pseudocode, English, or structure, or write a spec for existing code.
 disable-model-invocation: true
+argument-hint: "[check|update|simplify|create] <spec file, prompt, or what to describe>"
 ---
 
 Generate code from a high-level spec. The spec is the source of truth and the code is a build artifact of it, so the user can edit the spec and regenerate. The spec is a prompt or a file and may mix pseudocode, English steps, and structure such as `Class ABC: <description or interface>`. Its detail can range from line-level pseudocode to a loose description of behavior.
