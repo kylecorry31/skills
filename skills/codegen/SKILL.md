@@ -36,6 +36,8 @@ Resolve what you can from context before reporting anything. If the repo leaves 
 
 Judge each place at the level of detail the spec uses there. Line-level pseudocode leaves almost no room, so anything it leaves open that context does not settle is an error. A high-level description leaves the implementation open, so only report ambiguity that changes what the code does, not how it does it. Conflicts and nonsensical steps are errors at any level.
 
+Trace the values that flow between steps and functions. A degenerate output one step can produce, such as an empty list or a zero length, must be something the step that consumes it can handle.
+
 Do not be nitpicky. Report an error only if two competent implementers would produce observably different behavior, or the spec cannot work. Do not report missing detail that the language, repo conventions, or common practice settle. When unsure, it is not an error. Apply the same bar every run, so a spec that compiles once compiles again unless it changed.
 
 If there are any errors, write no code. Report every error at once, in this form, and stop:
@@ -52,19 +54,23 @@ Do not guess, pick a default, work around the problem, or generate partial outpu
 ### Resolve errors with the user
 If the user asks, go through the errors one at a time as questions. For each, ask what the spec should say, with a suggested answer the user can accept as is. They can also type their own. Then edit the spec with the smallest change that resolves the error, at the level of detail of the surrounding text. If the spec is a prompt rather than a file, show the revised spec instead.
 
-After the last answer, compile again, since the edits may have introduced new errors. When it is clean, continue with the original command.
+After the last answer, compile again, since the edits may have introduced new errors. Trace each changed rule through every step that uses its results, because a fix often exposes a case the original wording hid. When it is clean, continue with the original command.
 
 ## 3. Write the code
 - Where the spec gives steps, keep their order, conditions, and side effects. Where it names an algorithm or data structure, use that one. Do not transliterate line by line.
 - Where the spec leaves the how open, choose the simplest approach that performs well at realistic scale.
-- Use the classes, functions, names, and signatures the spec gives. Do not add features, parameters, abstractions, or error handling it does not call for, unless the language or repo requires them.
+- Use the classes, functions, names, and signatures the spec gives, in the language's casing. If existing code uses different ones, the spec wins: rename it and update the callers and tests that break. Do not add features, parameters, abstractions, or error handling it does not call for, unless the language or repo requires them.
 - Do not restate the spec in comments.
 
 ## 4. Regenerate after spec changes
-When code for the spec already exists, update it to match the revised spec with the smallest diff. If the existing code differs from the spec in ways the spec change does not explain, such as manual edits, ask before overwriting them.
+When code for the spec already exists, update it to match the revised spec with the smallest diff. Change behavior only where the spec calls for it, and keep the existing algorithm where the spec is silent.
+
+If the existing code differs from the spec in ways the spec change does not explain, such as manual edits, ask before overwriting them.
+
+Leave code that the spec no longer describes untouched, and mention it in the summary.
 
 ## 5. Verify
-Run the build and existing tests when possible, then check each requirement in the spec against the code. Do not write new tests unless asked. Finish with a short summary of anything you could not verify.
+Run the build and existing tests when possible, then check each requirement in the spec against the code. Finish with a short summary of every change in observable behavior from the old code, including edge cases, accuracy, and performance, separate from pure refactors, and of anything you could not verify.
 
 # Write or update a spec from existing code
 
@@ -77,10 +83,12 @@ The spec must be good enough to regenerate or update the code with this skill:
 - State the target language and the code's location.
 - Describe what the code actually does, not what it ought to do, including behavior callers can depend on, such as edge cases, error behavior, ordering, and side effects.
 - Give the structure and public signatures that other code depends on.
+- Use the code's real names, in the language's casing, for the types, functions, and values the spec mentions, so the spec and code stay aligned. Give values descriptive names, not single letters.
+- Follow the structure and format of the repo's existing specs, and keep it consistent within the file, such as writing every function heading the same way.
 - Go to line-level detail only where the exact steps matter, such as a specific algorithm, a required order of operations, or a performance constraint.
 
 ## Update
-The code is the source of truth. Make the smallest edit that brings the spec into alignment: change only text whose described behavior no longer matches the code, adding what the code now does and removing what it no longer does. Write each change at the level of detail of the surrounding spec. Leave everything else as written, including wording, order, and formatting.
+The code is the source of truth. Make the smallest edit that brings the spec into alignment: change only text whose described behavior no longer matches the code, adding what the code now does and removing what it no longer does. Write each change at the level of detail of the surrounding spec. Leave everything else as written, including wording, names, order, and formatting.
 
 ## Compile
 Compile the spec as described above. A created spec must produce no errors, since the same text will be the input when regenerating. Fix any it reports. For an updated spec, fix errors in the text you changed, and report errors in the text you left alone instead of editing it.
