@@ -2,7 +2,7 @@
 name: codegen
 description: Generate or regenerate code in any language from a high-level spec of pseudocode, English, or structure, or write a spec for existing code.
 disable-model-invocation: true
-argument-hint: "[check|update|simplify|create] <spec file, prompt, or what to describe>"
+argument-hint: "[implement|check|update|simplify|create] <spec file, prompt, or what to describe>"
 ---
 
 Generate code from a high-level spec. The spec is the source of truth and the code is a build artifact of it, so the user can edit the spec and regenerate. The spec is a prompt or a file and may mix pseudocode, English steps, and structure such as `Class ABC: <description or interface>`. Its detail can range from line-level pseudocode to a loose description of behavior.
@@ -11,7 +11,7 @@ The code must do exactly what the spec says, and be idiomatic, readable, and per
 
 # Commands
 
-- `/codegen <spec file or prompt>`: implement the spec, or update the code if it is already implemented.
+- `/codegen [implement] <spec file or prompt>`: implement the spec, or update the code if it is already implemented. `implement` is optional.
 - `/codegen check <spec file>`: compile the spec and report its errors, or `No errors.`, without writing code.
 - `/codegen update <spec file>`: update the spec to match the current code.
 - `/codegen simplify <spec file>`: rewrite the spec in simpler language without changing what it generates.
@@ -59,30 +59,30 @@ After the last answer, compile again, since the edits may have introduced new er
 ## 3. Write the code
 - Where the spec gives steps, keep their order, conditions, and side effects. Where it names an algorithm or data structure, use that one. Do not transliterate line by line.
 - Where the spec leaves the how open, choose the simplest approach that performs well at realistic scale.
-- Use the classes, functions, names, and signatures the spec gives, in the language's casing. If existing code uses different ones, the spec wins: rename it and update the callers and tests that break. Do not add features, parameters, abstractions, or error handling it does not call for, unless the language or repo requires them.
+- Use the classes, functions, names, and signatures the spec gives, in the language's casing. Signatures include parameter and return types. If existing code uses different ones, the spec wins: rename or change it and update the callers and tests that break. How much the spec pins down depends on its level of abstraction: a high-level spec leaves names, signatures, and structure to you, and a low-level spec fixes them. Do not add features, parameters, abstractions, or error handling it does not call for, unless the language or repo requires them.
 - Do not restate the spec in comments.
 
 ## 4. Regenerate after spec changes
 When code for the spec already exists, update it to match the revised spec with the smallest diff. Change behavior only where the spec calls for it, and keep the existing algorithm where the spec is silent.
 
-If the existing code differs from the spec in ways the spec change does not explain, such as manual edits, ask before overwriting them.
+Compare the whole spec to the code, not only the lines that changed, since the code may have drifted from the spec. If the existing code differs from the spec in ways the spec change does not explain, such as manual edits, ask before overwriting them.
 
 Leave code that the spec no longer describes untouched, and mention it in the summary.
 
 ## 5. Verify
-Run the build and existing tests when possible, then check each requirement in the spec against the code. Finish with a short summary of every change in observable behavior from the old code, including edge cases, accuracy, and performance, separate from pure refactors, and of anything you could not verify.
+Run the build and existing tests when possible, then check each requirement in the spec against the code. If an existing test fails because it encodes behavior the spec changed, update the test to match the spec. If a failure instead suggests the spec's behavior is wrong, report it and do not change the spec or the test. Add tests for new or changed behavior in the spec when that fits the repo's testing conventions. Finish with a short summary of every change in observable behavior from the old code, including edge cases, accuracy, and performance, separate from pure refactors, and of anything you could not verify.
 
 # Write or update a spec from existing code
 
 For `create` and `update`, do not change the code. `create` takes the code to describe. `update` takes the spec, and the code is the location it states. Ask if either is missing.
 
 ## Create
-The user may give a level of detail. Without one, write the highest level that still keeps the core functionality intact, leaving out how it is implemented.
+The user may give a level of detail. Without one, choose the level that best captures the functionality of the code, and leave out implementation details that do not affect it.
 
 The spec must be good enough to regenerate or update the code with this skill:
 - State the target language and the code's location.
 - Describe what the code actually does, not what it ought to do, including behavior callers can depend on, such as edge cases, error behavior, ordering, and side effects.
-- Give the structure and public signatures that other code depends on.
+- Give the structure and public signatures that other code depends on, with the code's real parameter and return types.
 - Use the code's real names, in the language's casing, for the types, functions, and values the spec mentions, so the spec and code stay aligned. Give values descriptive names, not single letters.
 - Follow the structure and format of the repo's existing specs, and keep it consistent within the file, such as writing every function heading the same way.
 - Go to line-level detail only where the exact steps matter, such as a specific algorithm, a required order of operations, or a performance constraint.
