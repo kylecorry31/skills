@@ -2,10 +2,10 @@
 name: codegen
 description: Generate or regenerate code in any language from a high-level spec of pseudocode, English, or structure, or write a spec for existing code.
 disable-model-invocation: true
-argument-hint: "[implement|check|update|simplify|create] <spec file, prompt, or what to describe>"
+argument-hint: "[implement|check|update|simplify|level|create] <spec file, prompt, or what to describe>"
 ---
 
-Generate code from a high-level spec. The spec is the source of truth and the code is a build artifact of it, so the user can edit the spec and regenerate. The spec is a prompt or a file and may mix pseudocode, English steps, and structure such as `Class ABC: <description or interface>`. Its detail can range from line-level pseudocode to a loose description of behavior.
+Generate code from a high-level spec. The spec is the source of truth and the code is a build artifact of it, so the user can edit the spec and regenerate. The spec is a prompt or a file and may mix pseudocode, English steps, and structure such as `Class ABC: <description or interface>`. Its detail can range from line-level pseudocode to a loose description of behavior (see Spec levels).
 
 The code must do exactly what the spec says, and be idiomatic, readable, and performant for the target language and repo.
 
@@ -15,9 +15,20 @@ The code must do exactly what the spec says, and be idiomatic, readable, and per
 - `/codegen check <spec file>`: compile the spec and report its errors, or `No errors.`, without writing code.
 - `/codegen update <spec file>`: update the spec to match the current code.
 - `/codegen simplify <spec file>`: rewrite the spec in simpler language without changing what it generates.
-- `/codegen create <what to describe>`: create a spec from existing code. Save it where the user says. Otherwise save it next to the repo's other specs, or in `specs/<short-description>.md` if there are none.
+- `/codegen level <low|medium|high> <spec file>`: rewrite the spec at another level of detail. See Change a spec's level.
+- `/codegen create [low|medium|high] <what to describe>`: create a spec from existing code, at the given level if any. Save it where the user says. Otherwise save it next to the repo's other specs, or in `specs/<short-description>.md` if there are none.
 
 Tell the user about these commands if they invoke the skill without arguments or the arguments are unclear.
+
+# Spec levels
+
+A spec is written at one of three levels. Each level up leaves more of the how to the generator.
+
+- **Low:** line-level pseudocode. It fixes the steps, their order, conditions, and side effects, plus the names, signatures, and structure of everything it mentions.
+- **Medium:** pseudocode or English for the rules and algorithms that decide behavior, with names and signatures for the public interface. It leaves helper functions, caching, and how the code is split up to the generator.
+- **High:** English description of what the code does, its public interface, and the rules callers can depend on. It leaves the algorithms to the generator.
+
+A spec can mix levels, going lower only where the exact steps matter. Compile each part at the level it is written at.
 
 # Generate code from a spec
 
@@ -77,7 +88,7 @@ Run the build and existing tests when possible, then check each requirement in t
 For `create` and `update`, do not change the code. `create` takes the code to describe. `update` takes the spec, and the code is the location it states. Ask if either is missing.
 
 ## Create
-The user may give a level of detail. Without one, choose the level that best captures the functionality of the code, and leave out implementation details that do not affect it.
+The user may give a level (low, medium, or high). Without one, choose the level that best captures the functionality of the code, and leave out implementation details that do not affect it. If told to use a level, write the whole spec at that level, otherwise adjust the level to maintain the functionality of the code.
 
 The spec must be good enough to regenerate or update the code with this skill:
 - State the target language and the code's location.
@@ -85,7 +96,7 @@ The spec must be good enough to regenerate or update the code with this skill:
 - Give the structure and public signatures that other code depends on, with the code's real parameter and return types.
 - Use the code's real names, in the language's casing, for the types, functions, and values the spec mentions, so the spec and code stay aligned. Give values descriptive names, not single letters.
 - Follow the structure and format of the repo's existing specs, and keep it consistent within the file, such as writing every function heading the same way.
-- Go to line-level detail only where the exact steps matter, such as a specific algorithm, a required order of operations, or a performance constraint.
+- Go below the chosen level only where the exact steps matter, such as a specific algorithm, a required order of operations, or a performance constraint.
 
 ## Update
 The code is the source of truth. Make the smallest edit that brings the spec into alignment: change only text whose described behavior no longer matches the code, adding what the code now does and removing what it no longer does. Write each change at the level of detail of the surrounding spec. Leave everything else as written, including wording, names, order, and formatting.
@@ -94,6 +105,15 @@ The code is the source of truth. Make the smallest edit that brings the spec int
 Compile the spec as described above. A created spec must produce no errors, since the same text will be the input when regenerating. Fix any it reports. For an updated spec, fix errors in the text you changed, and report errors in the text you left alone instead of editing it.
 
 Finish with a short summary, including any apparent bugs or surprising behavior you preserved in the spec.
+
+# Change a spec's level
+
+Rewrite the spec at the requested level so it generates the same behavior. Compile it first. If it has errors, report them and stop, since equivalence cannot be guaranteed. Do not change the code.
+
+- **Going up (for example low to medium):** remove detail that does not pin down behavior callers can depend on, such as helper functions, caching, and internal structure, and describe the rules in plainer terms. Keep every requirement, edge case, and public signature. Keep detail that must stay exact, such as a specific algorithm or a required order, and say in the summary which parts stayed below the new level.
+- **Going down (for example high to medium):** add the detail from the code the spec describes, as `create` would, and ask where the code is if the spec does not state it. Do not invent detail. If the code does not match the spec, report that and stop, since the added detail would change the spec's meaning.
+
+Compile the result and fix any new errors. Finish with a short summary of what was removed or added, so the user can check that nothing important was lost, and of any code behavior the spec did not state that is now pinned down.
 
 # Simplify a spec
 
