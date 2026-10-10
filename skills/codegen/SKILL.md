@@ -49,7 +49,7 @@ Judge each place at the level of detail the spec uses there. Line-level pseudoco
 
 Trace the values that flow between steps and functions. A degenerate output one step can produce, such as an empty list or a zero length, must be something the step that consumes it can handle.
 
-Do not be nitpicky. Report an error only if two competent implementers would produce observably different behavior, or the spec cannot work. Do not report missing detail that the language, repo conventions, or common practice settle. When unsure, it is not an error. Apply the same bar every run, so a spec that compiles once compiles again unless it changed.
+Do not be nitpicky. Report an error only if two competent implementers would produce observably different behavior, or the spec cannot work. Do not report missing detail that the language, repo conventions, or common practice settle. A term the spec does not define is not unresolved if it is standard in its domain (such as a well-known formula) or the repo already implements it; use that meaning. When unsure, it is not an error. Apply the same bar every run, so a spec that compiles once compiles again unless it changed.
 
 If there are any errors, write no code. Report every error at once, in this form, and stop:
 
