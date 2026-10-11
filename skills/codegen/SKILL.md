@@ -49,7 +49,7 @@ Judge each place at the level of detail the spec uses there. Line-level pseudoco
 
 Trace the values that flow between steps and functions. A degenerate output one step can produce, such as an empty list or a zero length, must be something the step that consumes it can handle.
 
-Do not be nitpicky. Report an error only if two competent implementers would produce observably different behavior, or the spec cannot work. Do not report missing detail that the language, repo conventions, or common practice settle. A term the spec does not define is not unresolved if it is standard in its domain (such as a well-known formula) or the repo already implements it; use that meaning. When unsure, it is not an error. Apply the same bar every run, so a spec that compiles once compiles again unless it changed.
+Do not be nitpicky. Report an error only if two competent implementers would produce observably different behavior, or the spec cannot work. Do not report missing detail that the language, repo conventions, or common practice settle. Updating callers, tests, and other wiring to match the signatures the spec gives is implementation work, not a spec error. A term the spec does not define is not unresolved if it is standard in its domain (such as a well-known formula) or the repo already implements it; use that meaning. When unsure, it is not an error. Apply the same bar every run, so a spec that compiles once compiles again unless it changed.
 
 If there are any errors, write no code. Report every error at once, in this form, and stop:
 
@@ -65,7 +65,7 @@ Do not guess, pick a default, work around the problem, or generate partial outpu
 For `/codegen check`, stop after compiling: report the errors in this form, or `No errors.`, and write no code.
 
 ### Resolve errors with the user
-If the user asks, go through the errors as questions, asking independent errors together and any that depend on an earlier answer afterward. For each, ask what the spec should say, with a suggested answer the user can accept as is. They can also type their own. Then edit the spec with the smallest change that resolves the error, at the level of detail of the surrounding text.
+If the user asks, go through the errors as questions, asking independent errors together and any that depend on an earlier answer afterward. For each, ask what the spec should say, with a suggested answer the user can accept as is, preferring the one that changes the least existing code and public API. They can also type their own. Then edit the spec with the smallest change that resolves the error, at the level of detail of the surrounding text.
 
 After the last answer, compile again, since the edits may have introduced new errors. Trace each changed rule through every step that uses its results, because a fix often exposes a case the original wording hid. When it is clean, continue with the original command.
 
@@ -76,6 +76,7 @@ After the last answer, compile again, since the edits may have introduced new er
 - If existing code uses different names or signatures, the spec wins: rename or change it and update the callers and tests that break. Ask first if the change touches public API, callers outside the repo, or code that differs from the spec because of manual edits.
 - How much the spec pins down depends on its level of abstraction: a high-level spec leaves names, signatures, and structure to you, and a low-level spec fixes them.
 - Do not add features, parameters, abstractions, or error handling the spec does not call for, unless the language or repo requires them.
+- If writing the code shows the spec cannot be followed as written, such as needing a different signature or a case it leaves undefined, do not choose for it. Stop and report it as an error from step 2.
 - Do not restate the spec in comments.
 
 ## 4. Regenerate after spec changes
@@ -86,7 +87,7 @@ Compare the whole spec to the code, not only the lines that changed, since the c
 Leave code that the spec no longer describes untouched, and mention it in the summary.
 
 ## 5. Verify
-Run the build and existing tests when possible, then check each requirement in the spec against the code. If an existing test fails because it encodes behavior the spec changed, update the test to match the spec. If a failure instead suggests the spec's behavior is wrong, report it and do not change the spec or the test. Add tests for new or changed behavior in the spec when that fits the repo's testing conventions. Finish with a short summary of every change in observable behavior from the old code, including edge cases, accuracy, and performance, separate from pure refactors, and of anything you could not verify.
+Run the build and existing tests when possible, then check each requirement in the spec against the code. If an existing test fails because it encodes behavior the spec changed, update the test to match the spec. If a failure instead suggests the spec's behavior is wrong, report the failing tests, why the spec causes them, and a recommended change to the spec, and do not change the spec or the test. Add tests for new or changed behavior in the spec when that fits the repo's testing conventions. Finish with a short summary of every change in observable behavior from the old code, including edge cases, accuracy, and performance, separate from pure refactors, and of anything you could not verify.
 
 # Write or update a spec from existing code
 
@@ -115,7 +116,7 @@ Finish with a short summary, including any apparent bugs or surprising behavior 
 
 Rewrite the spec at the requested level so it generates the same observable behavior callers can depend on. Compile it first. If it has errors, report them and stop, since equivalence cannot be guaranteed. Do not change the code.
 
-- **Going up (for example low to medium):** remove detail that does not pin down behavior callers can depend on, such as helper functions, caching, and internal structure, and describe the rules in plainer terms. Keep every requirement, edge case, and public signature. Keep detail that must stay exact, such as a specific algorithm or a required order, and say in the summary which parts stayed below the new level.
+- **Going up (for example low to medium):** remove detail that does not pin down behavior callers can depend on, such as helper functions, caching, and internal structure, and describe the rules in plainer terms. Raise only the lines or sections that the new level makes unnecessary, and keep the rest in its current form, so pseudocode stays pseudocode with some lines reworded as rules. Rewrite a whole block as prose only if the user asks. Keep every requirement, edge case, and public signature. Keep detail that must stay exact, such as a specific algorithm or a required order, and say in the summary which parts stayed below the new level.
 - **Going down (for example high to medium):** add the detail from the code the spec describes, as `create` would, and ask where the code is if the spec does not state it. Do not invent detail. If the code does not match the spec, report that and stop, since the added detail would change the spec's meaning.
 
 Compile the result and fix any new errors. Finish with a short summary of what was removed or added, so the user can check that nothing important was lost, and of any code behavior the spec did not state that is now pinned down.
