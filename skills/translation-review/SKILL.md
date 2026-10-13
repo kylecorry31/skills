@@ -38,7 +38,7 @@ Take all of the findings and explain why each is an issue. Do not nitpick. It is
 - **Blocking**: the translation tells users something wrong or unsafe, such as a changed meaning, a reversed negation, a changed number or unit, an altered condition or warning, or a broken placeholder. It must be fixed or replaced.
 - **Consider**: a real but minor inaccuracy, such as an added or omitted detail, a tone shift, or a lost format tag, that the author may accept.
 
-Quote the source and translated text exactly as they appear in the input. Drop any finding you cannot support with those quotes.
+Quote the source and translated text exactly as they appear in the input. Drop any finding you cannot support with those quotes. Judge the translated text itself, not your back-translation: a literal back-translation can look wrong when the translation is natural. If you are unsure about a nuance of the target language, say so in the finding rather than presenting it as certain.
 
 The output should be a list of issues (if any) in the form:
 
