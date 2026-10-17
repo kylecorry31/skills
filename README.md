@@ -12,6 +12,7 @@
 - **proof-of-concept**: Builds a throwaway experiment to test whether an idea or feature is feasible before you invest in a polished implementation.
 - **proofread**: Fixes spelling and grammar in a text file with minimal changes. It edits the file, so use version control and review the diff. Inspired by https://en.wikipedia.org/wiki/Wikipedia:Writing_articles_with_large_language_models
 - **qa-review**: Tests a change before release, such as against an emulator for Android apps. Use it as a second line of defense after your own QA.
+- **simplify**: Removes and simplifies code while preserving behavior, preferring deletion, reuse of what exists, and flatter code over new abstractions. It edits files, so use version control and review the diff.
 - **translation-review**: Compares source and translated text and reports whether the translation should be accepted or changed. Useful when you don't know the target language.
 
 ## Installation
