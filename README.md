@@ -5,6 +5,7 @@
 - **automated-testing**: Guides writing unit and end-to-end tests the way I prefer: public-behavior tests, hardcoded independent expectations, red/green TDD for bugs, and stable UI automation. Framework and platform agnostic.
 - **bug-investigation**: Investigates a reported bug. Provide the report and any logs or screenshots, and it reproduces the bug, finds the root cause, and writes an investigation report. It fixes the bug too if you ask.
 - **ci-failure**: Finds why a CI run or job failed, decides whether it is a regression, flaky, environmental, or transient, and fixes the root cause when there is one.
+- **clarify-requirements**: Interviews you with a recommended answer for each question until the requirements for a feature or change are clear. Pair it with handoff.
 - **code-review**: Finds bugs or deviations from standards in a diff or codebase snapshot. Use it as a second pass after your own manual review.
 - **dependency-update**: Updates dependencies or reviews version bumps by reading the upstream changes, applying breaking changes, and listing what to test manually.
 - **fact-check**: Checks claims in text against authoritative sources and generates a report linking each claim to source snippets. Click each claim's highlight to verify the quotes and links yourself.
