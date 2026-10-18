@@ -5,45 +5,24 @@ disable-model-invocation: true
 argument-hint: "[PR number | since <tag> | uncommitted | <area to review>] or findings to verify"
 ---
 
-Review without changing code. Report only material problems with a concrete failing scenario or demonstrable cost. For diffs, report only problems introduced or worsened by the change.
+Review without changing code.
 
-Exclude polish, reasonable style or design choices, speculative future issues, and unnecessary generality, tests, or docs. Flag style or naming only when it violates a documented rule or actively misleads readers.
+Scope (choose the first that applies):
+1. User-requested scope
+2. Uncommitted changes
+3. Changes between the current branch and the base branch
+4. Ask the user
 
-# Scope
+When given existing findings, do not run a new review. Check each against the current code, then keep, relabel, or drop it, and rewrite the kept ones in the report format below.
 
-- **Diff review**: use the user's fixed point or PR, or review the current branch/worktree when off `main`/`master` or when uncommitted changes exist.
-- **Snapshot review**: review the code the user names (files, a package, or a feature) as it is now, not a diff. On clean `main`/`master` with nothing named, ask what to review.
-- **Verify findings**: when given existing findings (pasted or in a file), do not run a new review. Check each against the current code, then keep, relabel, or drop it, and rewrite the kept ones in the report format below.
+Establish intent from the description, commits, docs, or linked issue; ask if unclear. Report only material problems with a concrete failing scenario or demonstrable cost. For diffs, report only problems introduced or worsened by the change. Exclude polish, reasonable style or design choices, speculative future issues, nitpicks, and unnecessary generality, tests, or docs. Flag style or naming only when it violates a documented rule or actively misleads readers.
 
-For a PR, check it out if it belongs to the current repo and the tree is clean; otherwise clone to a temporary directory.
-
-Include uncommitted changes unless told otherwise. Ask if the review scope is unclear.
-
-Clean up any temporary files and directories you created after you have finished the review.
-
-# Review
-
-Establish intent from the description, commits, comments, docs, or linked issue; ask if unclear. Check first whether the overall approach is sound, starting from the files with the most logic changes, before reviewing the rest. Read every changed line of hand-written code, and read the surrounding file and callers, not just the diff hunks; skim generated code and data files. Look for:
-
-- **Functionality**: broken intended behavior, practical edge cases, or unintended effects on existing code.
-- **Concurrency, security, compatibility**: races, deadlocks, vulnerabilities, data loss, missing migrations, or broken callers/data. For security, trace untrusted data (user input, files, intents, network responses) to where it is used, such as queries, file paths, commands, rendered output, and logs, and check for validation at each trust boundary. Also check for hardcoded secrets and weakened access controls.
-- **Performance**: regressions at realistic scale, such as N+1 queries or unbounded growth.
-- **Design**: misplaced logic, broken component interactions, or complexity likely to cause maintenance bugs.
-- **Tests**: incorrect tests or tests that would still pass if the code were broken; missing tests only for risky new behavior.
-- **Rules and docs**: documented project rule violations or docs/comments made false by the change.
-
-Delegate to subagents and use smaller, less capable models as needed.
-
-# Report
-
-Deduplicate findings. Drop findings without a concrete failure or cost, or excluded by the criteria above.
-
-Order findings by severity:
+Deduplicate findings and order them by severity:
 
 - **Blocking**: breaks normal intended behavior, risks security/data loss, or causes a serious regression. Requires a fix or an explanation of why it is not a problem.
 - **Consider**: a real but rare or limited problem, or a reasonable trade-off the author may accept.
 
-Explain the trigger and impact. Describe the problem; suggest a fix only when it is not obvious. If you reviewed only part of the scope, or an area such as security or concurrency needs expertise you could not apply, say so at the end of the report. If no findings remain, output only `No issues found.` Otherwise use:
+Explain the trigger and impact. Suggest a fix only when it is not obvious. If you reviewed only part of the scope, or an area needs expertise you could not apply, say so at the end. If no findings remain, output only `No issues found.` Otherwise use:
 
 ```
 # Code Review Results
