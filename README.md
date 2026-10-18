@@ -15,6 +15,7 @@
 - **qa-review**: Tests a change before release, such as against an emulator for Android apps. Use it as a second line of defense after your own QA.
 - **simplify**: Removes and simplifies code while preserving behavior, preferring deletion, reuse of what exists, and flatter code over new abstractions. It edits files, so use version control and review the diff.
 - **streamline**: Reviews a workflow, feature, or process and suggests removals, defaults, and automations that ask less of the user. It only makes suggestions and does not edit anything.
+- **trim-prompt**: Edits a skill or prompt down to what a frontier model would not do on its own, keeping your preferences and non-default behavior. It edits files, so use version control and review the diff.
 - **translation-review**: Compares source and translated text and reports whether the translation should be accepted or changed. Useful when you don't know the target language.
 
 ## Installation
