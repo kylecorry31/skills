@@ -14,7 +14,7 @@
 - **proofread**: Fixes spelling and grammar in a text file with minimal changes. It edits the file, so use version control and review the diff. Inspired by https://en.wikipedia.org/wiki/Wikipedia:Writing_articles_with_large_language_models
 - **qa-review**: Tests a change before release, such as against an emulator for Android apps. Use it as a second line of defense after your own QA.
 - **simplify**: Simplifies code while preserving behavior. It edits files, so use version control and review the diff.
-- **streamline**: Reviews a workflow, feature, or process and suggests removals, defaults, and automations that ask less of the user. It only makes suggestions and does not edit anything.
+- **streamline**: Questions requirements and suggests what to delete, default, or automate to reduce the complexity of a feature, system, or workflow and the steps and input it asks of its users. It only makes suggestions and does not edit anything.
 - **trim-prompt**: Edits a skill or prompt down to what a frontier model would not do on its own, keeping your preferences and non-default behavior. It edits files, so use version control and review the diff.
 - **translation-review**: Compares source and translated text and reports whether the translation should be accepted or changed. Useful when you don't know the target language.
 
