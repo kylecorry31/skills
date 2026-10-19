@@ -5,7 +5,7 @@ disable-model-invocation: true
 argument-hint: "<code, feature, or workflow> [constraints]"
 ---
 
-Review the target in five steps, in order. Eliminate before improving: do not suggest simplifying, speeding up, or automating anything an earlier step would delete. Measure cognitive load, number of actions, and moving parts, not code size or visual polish. Make no changes: deleting a requirement changes behavior, so the user decides what to adopt.
+Review the target in three steps, in order. Eliminate before improving: do not suggest simplifying anything an earlier step would delete. Measure cognitive load, number of actions, and moving parts, not code size or visual polish. Make no changes: deleting a requirement changes behavior, so the user decides what to adopt.
 
 # 1. Question the requirements
 
@@ -27,16 +27,20 @@ Keep what provides essential reliability, security, observability, or maintainab
 
 # 3. Simplify
 
-Simplify what remains: merge steps, flatten structure, and default or infer inputs from context instead of asking.
+Simplify what remains, preferring skipping work over making it faster or automating it. Look for:
+- Steps that can be merged and structure that can be flattened
+- Inputs that can be defaulted, inferred from context, detected, pre-filled, or synced instead of asked for or typed
+- Actions or decisions that can be automated without user intervention
+- Speed ups on the common path, such as blocking steps that could happen in the background, repeated waits for the same data, and round trips or screens between the user and the result
 
-# 4. Speed up the cycle
-
-Shorten the time between a user's action and the result they came for. Prefer skipping work over making it faster, and only target flows that survived steps 2 and 3. Look for blocking steps that could happen in the background, repeated waits for the same data, and round trips or screens between the user and the result.
-
-# 5. Automate
-
-Automate what the user still does by hand after the earlier steps. Look for values that can be detected, pre-filled, or synced instead of typed, recurring actions that can run on a schedule or trigger, and decisions the system can make from context. Do not automate anything destructive, irreversible, or visible to others unless it can be undone. Never bypass permission or consent prompts.
+Do not infer or automate anything destructive, irreversible, or visible to others unless it can be undone. Never bypass permission or consent prompts.
 
 # Report
 
-Lead with the recommended end state, the code, dependencies, concepts, and common-path actions it removes. Then list each suggestion with the requirement it challenges, its evidence, the current behavior, the proposed behavior, the tradeoff, and your recommendation, grouped by step and ordered by removal and interaction saved per risk. List anything you kept despite looking removable, with why, under `Kept`. List ideas that need new data, settings, or infrastructure separately under `Later`.
+Use exactly these headings, in this order, with each suggestion as a numbered item restarting at 1 under its heading so the user can refer to it as, for example, "Delete 2" or "2.2":
+
+- `# 1. Question the requirements`, `# 2. Delete`, `# 3. Simplify`: one numbered item per suggestion, ordered by removal and interaction saved per risk. Each item states the requirement it challenges, its evidence, the current behavior, the proposed behavior, what it removes (code, dependencies, concepts, common-path actions), the tradeoff, and your recommendation.
+- `# Kept`: anything that looked removable but was kept, with why.
+- `# Later`: ideas that need new data, settings, or infrastructure.
+
+Omit no heading; write "None" under an empty one.
