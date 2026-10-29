@@ -1,16 +1,13 @@
 ---
 name: proof-of-concept
-description: Create a throwaway proof-of-concept to test ideas quickly without affecting the main project.
-disable-model-invocation: true
+description: Use when asked to create a proof-of-concept or prototype.
 argument-hint: "<idea, feature, or issue URL>"
 ---
 
-Build a throwaway proof of concept to find out whether the given idea or feature is feasible before the user invests in it. Code quality can be rough: no tests, documentation, linting, or error handling, and values can be hardcoded, unless something blocks building or running. Keep it focused on the core idea.
+Build a working proof-of-concept to determine if the idea is feasible. Don't worry about code quality, linting, tests, error handling, or documentation.
 
-Before building, say in a few sentences what question the proof of concept answers, how you will answer it, and what result would mean the idea is not feasible. Build only what that question needs: hardcode or stub everything that is not the risky part.
+Before you start building, ask the user any clarifying questions, then describe your plan in a few sentences.
 
-Keep experiments quick. If a step will take more than a few minutes, such as a large download or training run, start with the smallest version that gives a signal and tell the user.
+If you achieve a working proof-of-concept, summarize how it works and what it demonstrates. If you are unable to get it working, summarize what you tried and why it didn't work.
 
-After you get something working, report what it showed: whether the idea is feasible, with measurements where they matter (performance, size, accuracy). Say how you measured, such as the device, data size, and number of runs, and list what was hardcoded or stubbed so the user knows what the result does not cover. A result showing the idea is not feasible is a useful answer; report it plainly instead of working around the question. Then let the user evaluate it and give feedback to iterate on. If they are satisfied, they may ask for a clean-up to make it easier to turn into a polished implementation.
-
-To clean up, refactor only for readability, so the diff is easy to follow for someone using it as a reference. Do not productionalize the code. Then write a markdown summary of the changes (Simplified Technical English, no fluff) to `.scratch/proof-of-concept-<name of the proof of concept>.md`.
+If the user asks you to clean up the proof-of-concept, refactor the code for readability, so that someone can use it as a reference for a production implementation. Remove any unnecessary comments, debug statements, and temporary code.

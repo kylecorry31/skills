@@ -1,6 +1,6 @@
 ---
 name: qa-review
-description: Perform a QA review of changes
+description: Use when asked to perform a QA review of changes
 disable-model-invocation: true
 argument-hint: "<changes to test: branch, tag range, PR, or feature> [build, device, time limit]"
 ---
@@ -47,13 +47,7 @@ Put detailed stack traces, screenshots (use markdown images), etc. here. Screens
 # Process
 
 ## 1. Set up tracking
-Create a TODO item for each test scenario, including edge cases and alternate user paths. Derive scenarios from each change, then vary them where bugs tend to hide, as far as the change makes them relevant (not all of these are needed, use judgement based on what changed):
-
-- **Inputs**: boundary values, empty, invalid, very long, and unusual units, time zones, or locales.
-- **State**: first use, existing data after upgrading from the previous release, and moving between the feature's states, such as on/off or before/after a setting changes.
-- **Interruptions**: rotation, backgrounding and resuming, the app process being killed and restored, screen lock, and losing network or a permission mid-task.
-- **Environment**: permissions denied, light and dark theme, large font size, and a screen reader for changed UI.
-- **Regressions**: existing features that share code or screens with the change.
+Create a TODO item for each test scenario, including edge cases and alternate user paths.
 
 Before running a scenario, decide what the correct result is from the documentation, the previous release, or consistency with the rest of the app, not from what the build does. Mark a scenario's item in progress (change `[ ]` to `[~]`) and save `TODO.md` immediately before starting it, including each scenario in a batch.
 
