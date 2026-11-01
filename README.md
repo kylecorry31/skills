@@ -19,7 +19,7 @@
 - **translation-review**: Compares source and translated text and reports whether the translation should be accepted or changed. Useful when you don't know the target language.
 
 ## Installation
-This repository is an [Agent Plugin](https://agent-plugins.org/) containing reusable Agent Skills for software and content review. It is skills-only and does not provide an MCP server.
+This repository is an [Agent Plugin](https://agent-plugins.org/) containing reusable Agent Skills for software engineering and project management. It is skills-only and does not provide an MCP server.
 
 ## Support
 I don't plan on providing support if it isn't working for you. I'll keep it up to date if I find it useful.

@@ -1,7 +1,7 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "kylecorry31",
-  "description": "Kyle Corry's human-in-the-loop review skills",
+  "description": "Kyle Corry's human-in-the-loop agent skills for software engineering and project management.",
   "owner": {
     "name": "Kyle Corry",
     "url": "https://github.com/kylecorry31"

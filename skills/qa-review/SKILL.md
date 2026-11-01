@@ -13,7 +13,7 @@ If you have the option to test with multiple build types, prefer a release or st
 
 You can write automated tests to help, but do not modify the code under test, except temporary log statements when the user allows them (remove them afterward). If you find a bug, report it in the QA findings and let the developers fix it.
 
-Create `.scratch/<name-for-review>-qa/TODO.md` and `.scratch/<name-for-review>-qa/review.md` before running the first test. Keep both files up to date throughout the review. Use the following template for `review.md`:
+Create `.scratch/<name-for-review>-qa/TODO.md` and `.scratch/<name-for-review>-qa/review.md` before running the first test. Use the following template for `review.md`:
 
 ```markdown
 # <Release Version Name> QA Findings
@@ -54,7 +54,7 @@ Before running a scenario, decide what the correct result is from the documentat
 ## 2. Run the tests
 Run scenarios individually, or in small batches when they are independent or share setup, state, or tooling. Do not batch scenarios when one depends on another's result, changes shared state in a way that affects the others, or would make progress ambiguous.
 
-Capture screenshots, logs, and reproduction details while testing. Watch the logs for crashes, errors, and warnings even when the screen looks correct. For each failure, record the build, device, exact steps, expected and actual results, and how often it reproduces. As each scenario finishes, in the same turn, add its `PASS`, `FAIL`, `PARTIAL`, or `NOT TESTED` result to `review.md` and mark its TODO item `[x]` if complete or `[!]` if blocked or failed. Before starting the next scenario or batch, confirm every completed scenario has a result in both files. If testing is interrupted, leave both files showing the completed and in-progress scenarios so another reviewer can resume. Do not reconstruct either file at the end.
+Capture screenshots, logs, and reproduction details while testing. Watch the logs for crashes, errors, and warnings even when the screen looks correct. For each failure, record the build, device, exact steps, expected and actual results, and how often it reproduces. As each scenario finishes, in the same turn, add its `PASS`, `FAIL`, `PARTIAL`, or `NOT TESTED` result to `review.md` and mark its TODO item `[x]` if complete or `[!]` if blocked or failed. If testing is interrupted, leave both files showing the completed and in-progress scenarios so another reviewer can resume.
 
 ## 3. Finish the review
 When testing is complete, check both files: every TODO item has a terminal status, every tested scenario has one clear result in `review.md`, every `FAIL` and `PARTIAL` includes the appendix details, assets are linked correctly, and no findings or blocked tests are missing. Resolve any discrepancies.

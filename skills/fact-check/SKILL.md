@@ -22,7 +22,7 @@ Save the verbatim original text to `<tmp>/fact-check-source-<source-slug>-<times
 Identify each factual claim as an exact substring of the text. A claim is a statement that can be verified as true or false.
 
 ## 3. Fact-check each claim
-Check every claim against the user's authoritative sources, or authoritative online sources when none are provided. Try to identify multiple different sources for each claim.
+Check every claim against the user's authoritative sources, or authoritative online sources when none are provided. Use multiple independent sources for each claim when they exist, and say when only one was found.
 
 Extract verbatim quotes from the sources that support or refute the claim. Retain the source URLs.
 

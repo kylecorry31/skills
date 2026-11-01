@@ -32,4 +32,4 @@ Explain the trigger and impact. Suggest a fix only when it is not obvious. If yo
 <Trigger and impact>
 ```
 
-If asked to save a report without a filename, use `code-review-<timestamp>-<slugified-short-description>.md`.
+If asked to save a report without a filename, use `.scratch/code-review-<timestamp>-<slugified-short-description>.md`.
