@@ -1,6 +1,7 @@
 ---
 name: teach
 description: Use when asked to teach, explain, tutor, or help the user learn or understand anything (any subject, skill, concept, system, or material), or to check that they understood it.
+disable-model-invocation: true
 argument-hint: "<subject, concept, or material to learn>"
 ---
 
